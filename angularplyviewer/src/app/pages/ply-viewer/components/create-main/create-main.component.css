@@ -1,0 +1,166 @@
+.createToolbar {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    float: left;
+    background-color: #83adcf;
+}
+
+.createToolbar li{
+    margin-right: 0.3em;
+    display: inline-block;
+}
+.createToolbar li img{
+    cursor: pointer;
+}
+.createToolbar li:hover, .hovered{
+    background-color: #677891;
+}
+
+#topCreate{
+    display: inline;
+    white-space: nowrap;
+}
+
+#threedviewer{
+    height: 70vh;
+    width: 100%;
+    display: inline-block;
+    vertical-align:top;
+}
+
+#resizerCreateProject{
+    width: 100%;
+    height: 3px;
+    background-color: #000;
+}
+
+.closeWindow{
+    position: absolute;
+    top:0;
+    right:0;
+    cursor: pointer;
+}
+
+#cropTools{
+    position: fixed;
+    background: tan;
+    right: 25px;
+    top: 240px;
+    width: 230px;
+}
+#cropTools span{
+    display: block;
+    margin-bottom: 20px;
+    text-align: center;
+}
+#cropTools input[type=range]{
+    display: inline-block;
+    cursor: pointer;
+}
+#cropTools label{
+    display: inline-block;
+    cursor: pointer;
+}
+#cropTools button{
+    margin: 20px 0 20px 20px;
+    cursor: pointer;
+}
+#helpers{
+    cursor: pointer;
+}
+
+#scalePopUp{
+    width: 390px;
+    height: 270px;
+}
+#scalePopUp .distanceText{
+    padding: 40px 15px 20px;
+}
+#doScale{
+    cursor: pointer;
+}
+#distance{
+    width: 100px;
+    margin-left: 15px;
+    margin-right: 20px;
+    text-align: center;
+}
+
+#invert{
+    width: 400px;
+    height: 200px;
+    text-align: center;
+}
+#invert input, #invert label{
+    cursor: pointer;
+}
+#invert .invertText{
+    padding: 40px 15px 20px;
+}
+#invert button{
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+#measurePopup{
+    width: 300px;
+    height: 60px;
+    text-align: center;
+    padding: 40px;
+    font-size: 22px;
+}
+
+#saveAsPopUp{
+    height: 190px;
+    width: 450px;
+}
+#saveAsPopUp input{
+    display: inline-block;
+    padding: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+#saveAsPopUp select{
+    display: inline-block;
+    padding: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+#saveAsPopUp button{
+    padding: 5px;
+    cursor: pointer;
+}
+#saveAs{
+    display: inline-block;
+    padding: 10px 0 10px 10px;
+}
+
+.popupinfobackground{
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 150vh;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+.popupinfo{
+    margin: 20% auto;
+    background-color: #677891;
+    color:#fff;
+    height: 390px;
+    width: 800px;
+    max-width: 45%;
+    z-index: 1003;
+    position: relative;
+}
+
+.createToolbar li.no, .createToolbar li.no img{
+    cursor: default;
+}
+.createToolbar li.no:hover, .createToolbar li.no img:hover{
+    background-color: transparent;
+}
+

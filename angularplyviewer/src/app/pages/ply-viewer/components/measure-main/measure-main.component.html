@@ -1,0 +1,223 @@
+<ul class="measureToolbar">
+    <li title="Import Files" [ngClass]="{'no':enableTools.importFile == false}">
+        <label (click)="openFileDialog()" >
+            <img src="../../../../../assets/icons/import.png" />
+        </label>
+    </li>
+    <li title="Save" (click)=" showSavePopUp() "
+        [ngClass]="{'no':enableTools.save == false}">
+        <img src="../../../../../assets/icons/save.png" /></li>
+    <li title="Invert" (click)="invertPlots()"
+        [ngClass]="{'no':enableTools.invert == false}">
+        <img src="../../../../../assets/icons/invert.png" /></li>
+    <li title="Auto Rotate" (click)="autoRotate()"
+        [ngClass]="{'no':enableTools.save == false}">
+        <img src="../../../../../assets/icons/autorotate.png" /></li>
+    <li title="Rotate 90 Degrees" (click)="rotate90()"
+        [ngClass]="{'no':enableTools.rotate90 == false}">
+        <img src="../../../../../assets/icons/rotate.png" /></li>
+    <li title="Mirror Image" (click)="mirrorImage()"
+        [ngClass]="{'no':enableTools.mirror == false}">
+        <img src="../../../../../assets/icons/mirror.png" /></li>
+    <li title="Toggle Cropping" (click)="toggleCropping()"
+        [ngClass]="{'no':enableTools.crop == false, 'hovered':flagCrop}" >
+        <img src="../../../../../assets/icons/cropselection.png" /></li>
+    <li title="Toggle Landmark Placing Mode" (click)="toggleLandmarks()"
+        [ngClass]="{'no':enableTools.landmark == false, 'hovered':flagLandmark}">
+        <img src="../../../../../assets/icons/setlocationmarker.png" /></li>
+    <li title="Delete All Landmarks" (click)="delLandmarks()"
+        [ngClass]="{'no':enableTools.delete == false}">
+        <img src="../../../../../assets/icons/dellocationmarker.png" /></li>
+    <li title="Landmark Distances" (click)="distanceLandmarks()"
+        [ngClass]="{'no':enableTools.distance == false}">
+        <img src="../../../../../assets/icons/landmarkdistances.png" /></li>
+    <li title="Landmark Depth Chart" (click)="depthChart()"
+        [ngClass]="{'no':enableTools.depth == false}">
+        <img class="depthChart" src="../../../../../assets/icons/depthchart.png" /></li>
+    <li title="Quick Measure" (click)="toggleQuickMeasure()"
+        [ngClass]="{'no':enableTools.measure == false,'hovered':flagMeasure}">
+        <img src="../../../../../assets/icons/measure.png" /></li>
+    <li title="Toggle Contours" (click)="toggleContours()"
+        [ngClass]="{'no':enableTools.contour == false,'hovered':flagContour}">
+        <img src="../../../../../assets/icons/togglecontour.png" /></li>
+    <li title="Contour Crop" (click)="showContourCrop()"
+        [ngClass]="{'no':enableTools.contourtools == false || (enableTools.contourtools && flagContour == false ) }">
+        <img src="../../../../../assets/icons/cropcontour.png" /></li>
+    <li title="Toggle Scalebar" (click)="toggleScalebar()"
+        [ngClass]="{'no':enableTools.scale == false, 'hovered': flagScalebar }">
+        <img src="../../../../../assets/icons/togglescalebar.png" /></li>
+    <li title="Toggle Grid" (click)="toggleGrid()"
+        [ngClass]="{'no':enableTools.grid == false, 'hovered': flagGridHover }">
+        <img src="../../../../../assets/icons/togglecmgrid.png" /></li>
+    <li class="colorScale" title="Colour Map">
+        <select [(ngModel)]="colorScale" (change)="changeColourScale()">
+            <option *ngFor="let c of colorScales" [ngValue]="c.name">{{c.name}}</option>
+        </select>
+    </li>
+</ul>
+
+<input
+  #importMeasure
+  type="file"
+  accept=".csv, .asc, .ply"
+  (change)="onFileChanged($event)"
+  style="display:none;" />
+
+<div class="clear"></div>
+
+<div id="topMeasure" #topMeasure>
+    <div id="threeview" #threeview>
+    </div>
+    <div id="mainview" #mainview
+        [ngClass]=" { 'middleText': !currentXYZ } "
+        mwlResizable
+        [resizeEdges]="{ left: true }"
+        [enableGhostResize]="true"
+        (resizeEnd)="onResizeEnd( $event )"
+        (drop)="generatePanels( $event )"
+        (dragover)="$event.preventDefault()">
+        <span *ngIf=" !currentXYZ ">Drop Model here</span>
+    </div>
+</div>
+
+<div id="resizerMeasureProject"></div>
+
+<div class="popupinfobackground" *ngIf=" openPopupInfo === true " (click)=" openPopupInfo = false ">
+    <div id="open" class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)=" openPopupInfo = false ">
+            <img src="../../../../../assets/icons/delete.png">
+        </div>
+        <label id="precision">Precision:</label>
+        <select [(ngModel)]="precision">
+            <option *ngFor="let c of precisions" [ngValue]="c.name">{{c.name}}</option>
+        </select>
+        <label for="scale">Scale:</label>
+        <select [(ngModel)]="scale">
+            <option *ngFor="let c of scales" [ngValue]="c.id">{{c.name}}</option>
+        </select><br>
+        <button (click)="doOpen()">Apply</button>
+    </div>
+</div>
+
+<div class="popupinfobackground" *ngIf=" savePopUpInfo === true " (click)=" savePopUpInfo = false ">
+    <div id="saveAsPopUp" class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)=" savePopUpInfo = false " ><img src="../../../../../assets/icons/delete.png"></div>
+        <div id="saveAs">Save As</div>
+        <br>
+        <input [(ngModel)]="saveFileName">
+        <select [(ngModel)]="saveFileType">
+            <option *ngFor="let c of fileTypes" [ngValue]="c.name">{{c.name}}</option>
+        </select>
+        <button (click)="doSaveAs()">OK</button>
+    </div>
+</div>
+
+<div class="popupinfobackground" *ngIf=" distanceTable.length > 1 " (click)=" distanceTable.length = 0 ">
+    <div id="distances" class="popupinfo" [ngStyle]="{ 'width': distancesWidth + 'px' }" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)=" distanceTable.length = 0 " >
+            <img src="../../../../../assets/icons/delete.png">
+        </div>
+        <div class="closeWindowSave" (click)=" saveLandmarkDistances() ">
+            <img src="../../../../../assets/icons/save.png">
+        </div>
+        <div class="dTitle">POINTS</div>
+        <div class="row">
+            <span>&nbsp;</span><span>X</span><span>Y</span><span>Z</span>
+        </div>
+        <div id="points">
+            <div class="row" *ngFor=" let d of landmarks ; index as i ">
+                <span>
+                    L{{i+1}}
+                </span>
+                <span>
+                    {{d[0]}}
+                </span>
+                <span>
+                    {{d[1]}}
+                </span>
+                <span>
+                    {{d[2]}}
+                </span>
+                <br>
+            </div>
+        </div>
+        <div class="dTitle">DISTANCES</div>
+        <div id="dTable">
+            <div class="row">
+                <span>&nbsp;</span>
+                <span *ngFor=" let l of distanceTable ; index as i; ">
+                    L{{i+1}}
+                </span>
+            </div>
+            <div class="row" *ngFor=" let l of distanceTable ; index as i; ">
+                <span>L{{i+1}}</span>
+                <span *ngFor="let c of l">
+                    {{c}}
+                </span>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="popupinfobackground" [hidden]="!depthGridValues" (click)="depthGridValues = false">
+    <div class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)="depthGridValues = false" >
+            <img src="../../../../../assets/icons/delete.png">
+        </div>
+        <div class="closeWindowSave" (click)=" saveDetphChart() ">
+            <img src="../../../../../assets/icons/save.png">
+        </div>
+        <div id="depthChart"></div>
+    </div>
+</div>
+
+<div class="popupinfobackground" [hidden]="!flagContourCrop" (click)="flagContourCrop = false">
+    <div id="contour" class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)="flagContourCrop = false" >
+            <img src="../../../../../assets/icons/delete.png">
+        </div>
+        <div>
+            <span>Contour Crop Start:</span>
+            <select [(ngModel)]="croppingStart">
+                <option *ngFor="let c of croppingRange" [ngValue]="c.id">{{c.id}}</option>
+            </select>
+            <br>
+            <span>Contour Crop End:</span>
+            <select [(ngModel)]="croppingEnd">
+                <option *ngFor="let c of croppingRange" [ngValue]="c.id">{{c.id}}</option>
+            </select>
+            <br>
+            <button (click)="doContourCrop()">OK</button>
+        </div>
+    </div>
+</div>
+
+<div class="popupinfobackground" *ngIf=" measurePopUpInfo === true " (click)="measurePopUpInfo = false">
+    <div id="measurePopup" class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)="measurePopUpInfo = false">
+            <img src="../../../../../assets/icons/delete.png">
+        </div>
+        <span>{{this.quickDistance}}</span>
+    </div>
+</div>
+
+<div class="popupinfobackground" *ngIf=" flagGrid === true " (click)="closeGripPopUp()">
+    <div id="grid" class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)="closeGripPopUp()" >
+            <img src="../../../../../assets/icons/delete.png">
+        </div>
+        <div class="title">
+            Choose Grid Distance
+        </div>
+        <div id="options">
+            <input [(ngModel)]="gridDistance" (keyup)="validateDistance($event)">
+            <select [(ngModel)]="gridScale">
+                    <option *ngFor="let c of scales" [ngValue]="c.id">{{c.name}}</option>
+            </select><br>
+            <button (click)="addGrid()">OK</button>
+        </div>
+    </div>
+</div>
+
+<div id="plotTarget"></div>

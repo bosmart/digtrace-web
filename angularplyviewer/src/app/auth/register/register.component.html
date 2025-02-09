@@ -1,0 +1,72 @@
+<div class="container form-area-lg shadow-lg" [ngStyle]="{'margin-bottom':'80px'}">
+  <h4 class="text-light mb-2 text-center">Create a new account</h4>
+  <form [formGroup]="registerForm" (ngSubmit)="registerOnSubmit()">
+    <div class="form-group">
+      <input type="text" class="text-light form-input w-48" placeholder="First Name"
+             formControlName="firstName"
+      >
+      <input type="text" class="text-light form-input w-48 float-right" 
+             formControlName="lastName" placeholder="Last Name"
+      >
+    </div>    
+    <div class="form-group">
+      <input type="text" class="text-light form-input" placeholder="Username*" 
+             formControlName="userName"
+      >     
+      <small *ngIf="(userName.invalid && allAlerts) || errorMsgs.userName" class="text-danger ml-1">
+                  {{ errorMsgs.userName || "Username is required" }} 
+      </small>
+    </div>
+    <div class="form-group">
+      <input type="text" class="text-light form-input" placeholder="Institute*" 
+             formControlName="institute"
+      >
+      <small *ngIf="institute.invalid && allAlerts" class="text-danger ml-1">
+        Institute name is required
+      </small>
+    </div>
+    <div class="form-group">
+      <input type="email" class="text-light form-input" placeholder="Email*" 
+             formControlName="email"
+      >
+      <small *ngIf="(email.invalid && allAlerts) || errorMsgs.email" class="text-danger ml-1">
+        {{ errorMsgs.email || "Email is required" }}
+      </small>
+    </div>
+    <div class="form-group">
+      <input type="password" class="text-light form-input mb-2" placeholder="Password*" 
+             formControlName="password"
+      >
+      <small *ngIf="password.invalid && allAlerts" class="text-danger ml-1 mb-2">
+        Password is required
+      </small>
+      <small class="text-light passwordList">
+        <ul>
+          <li>Your passwordword can't be too similar to your other personal information.</li>
+          <li>Your passwordword must contain at least 8 characters.</li>
+          <li>Your passwordword can't be a commonly used password.</li>
+          <li>Your passwordword can't be entirely numeric.</li>
+        </ul>
+      </small>      
+      <input type="password" class="text-light form-input mb-1" placeholder="Confirm Password*" 
+             formControlName="confirmPassword"
+      >  
+      <small *ngIf="confirmPassword.invalid && allAlerts" class="text-danger ml-1">
+        Password has to be confirmed
+      </small>    
+    </div>
+    <div class="form-group form-check text-center mt-4">
+      <input type="checkbox" class="form-check-input" formControlName="registerCheck">
+      <label class="form-check-label text-light" for="registerCheck">I agree to the terms & conditions</label>      
+      <small *ngIf="registerCheck.invalid && allAlerts" class="text-danger ml-1 d-block mt-2">
+        You must agree to the terms and conditions first
+      </small>
+    </div>            
+    <button type="submit" class="btn btn-custom btn-sm w-100 mt-4">
+      Register
+    </button>    
+    <div class="mt-2 text-center">
+      <a routerLink="/auth/login" class="text-light fs-14">Already have an account? Sign in</a>
+    </div>
+  </form>
+</div>

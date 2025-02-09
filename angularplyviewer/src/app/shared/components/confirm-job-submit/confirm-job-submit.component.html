@@ -1,0 +1,18 @@
+<h2 mat-dialog-title class="title">Submit your job? This action cannot be undone</h2>
+
+<div *ngIf="submitModalErrors" class="alert alert-block text-danger p-0"> 
+  <ul [ngStyle]="{'padding-left':'20px'}"> 
+    <li *ngFor="let warning of submitModalErrors">
+      {{warning}}
+    </li> 
+  </ul> 
+</div>
+
+<div>
+  <input [ngStyle]="{'padding-left':'20px'}" type="checkbox" [(ngModel)]="submitCheck">
+  <label for="submitCheck" style="margin-left:10px">Submit Job</label>
+</div>
+<div mat-dialog-actions class="buttons">  
+  <button mat-button mat-dialog-close (click)="cancelModal()" class="cancelBtn">Cancel</button>
+  <button  mat-button mat-dialog-close (click)="confirmModal()" class="confirmBtn">Submit Job</button>
+</div>

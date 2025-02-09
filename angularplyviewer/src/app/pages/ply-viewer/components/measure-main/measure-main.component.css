@@ -1,0 +1,294 @@
+#topMeasure{
+    display: inline;
+    white-space: nowrap;
+}
+
+#leftview{
+    width: 30%;
+    max-width: 50%;
+    min-height: 630px;
+    height: 630px;
+}
+
+#frontview, #sideview{
+    border-bottom: #000 3px solid;
+    height: 33%;
+}
+
+#threeview{
+    display: inline-block;
+    height: 70vh;
+    width: 30%;
+    vertical-align: top;
+    border-right: 1px solid black;
+}
+
+#resizerMeasureMainWindows{
+    min-height: 630px;
+    height: 630px;
+    width: 3px;
+    cursor: col-resize;
+    background-color: #000;
+    display: inline-block;
+}
+
+#mainview{
+    display: inline-block;
+    height: 70vh;
+    background-color: #eeeeee;
+    vertical-align: top;
+    width: 70%;
+}
+
+.middleText{
+    line-height: 70vh;
+    text-align: center;
+    font-style: oblique;
+}
+
+#resizerMeasureProject{
+    width: 100%;
+    height: 3px;
+    background-color: #000;
+}
+
+.measureToolbar {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    float: left;
+    background-color: #83adcf;
+    overflow: hidden;
+    height: 40px;
+}
+
+.measureToolbar li{
+    cursor: pointer;
+    margin-right: 0.3em;
+    height: 40px;
+    width: 36px;
+    float: left;
+}
+.measureToolbar img{
+    cursor: pointer;
+}
+.measureToolbar li:hover{
+    background-color: #677891;
+}
+.depthChart{
+    margin-top: 11px;
+    margin-left: 5px;
+}
+
+.measureToolbar li.colorScale{
+    margin-top: 0.5em;
+    height: auto;
+    width: auto;
+}
+.measureToolbar li.colorScale select{
+    cursor: pointer;
+}
+
+#canvasIE{
+    display: none;
+}
+
+.closeWindow, .closeWindowSave{
+    position: absolute;
+    top:0;
+    right:0;
+    cursor: pointer;
+}
+.closeWindowSave{
+    right: 40px;
+}
+
+#plotTarget{
+    display: none;
+    width: 500px;
+    height: 500px;
+}
+
+.scaleBar{
+    position: fixed;
+    top: 30%;
+    right: 10%;
+    background: gray;
+    padding: 10px 5px;
+    text-align: center;
+    font-weight: bold;
+    color: floralwhite;
+}
+
+.popupinfobackground{
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 150vh;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+.popupinfo{
+    margin: 20% auto;
+    background-color: #677891;
+    color:#fff;
+    height: 390px;
+    width: 800px;
+    z-index: 1003;
+    position: relative;
+}
+
+#open{
+    width:450px;
+    height: 200px;
+}
+#open label{
+    padding-right: 5px;
+}
+#open select{
+    margin-right:20px;
+    margin-top:20px;
+    cursor: pointer;
+}
+#open button{
+    margin-top: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+#precision{
+    margin-left:20px;
+}
+#saveAsPopUp{
+    height: 190px;
+    width: 450px;
+}
+#saveAsPopUp input{
+    display: inline-block;
+    padding: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+#saveAsPopUp select{
+    display: inline-block;
+    padding: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+#saveAsPopUp button{
+    padding: 5px;
+    cursor: pointer;
+}
+#saveAs{
+    display: inline-block;
+    padding: 10px 0 10px 10px;
+}
+
+#depthChart{
+    top: 40px;
+    position: relative;
+}
+
+#contour{
+    width: 400px;
+    height: 190px;;
+}
+#contour span{
+    width: 165px;
+    display: inline-block;
+    padding: 5px 5px 5px 10px;
+}
+#contour select{
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+}
+#contour button{
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+#distances{
+    height: auto;
+    padding: 5px 0 20px;
+    width: auto;
+    max-width: 70%;
+    margin: 5% auto;
+}
+#distances span{
+    padding: 5px 10px;
+    background-color: #fff;
+    color: #000;
+}
+#distances .row{
+    padding-top: 5px;
+    margin: 15px 10px 0;
+}
+#distances .row span{
+    width: 50px;
+    display: inline-block;
+}
+.dTitle{
+    margin: 15px;
+    font-size: 20px;
+}
+#points{
+    overflow-y: scroll;
+    height: 210px;
+}
+#dTable{
+    height: 210px;
+    overflow-y: scroll;
+}
+
+#grid{
+    width: 400px;
+    height: 190px;;
+}
+#grid .title{
+    padding: 20px 30px;
+}
+#grid input{
+    width: 100px;
+    margin-right: 20px;
+}
+#grid span{
+    width: 165px;
+    display: inline-block;
+    padding: 5px 5px 5px 10px;
+}
+#grid select{
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+}
+#grid button{
+    margin-top: 20px;
+}
+#options{
+    padding: 0 30px;
+}
+
+#measurePopup{
+    width: 300px;
+    height: 60px;
+    text-align: center;
+    padding: 40px;
+    font-size: 22px;
+}
+
+.hovered{
+    background-color: #677891;
+}
+.hidden{
+    display: none;
+}
+
+.measureToolbar li.no, .measureToolbar li.no img{
+    cursor: default;
+}
+.measureToolbar li.no:hover, .measureToolbar li.no img:hover{
+    background-color: transparent;
+}

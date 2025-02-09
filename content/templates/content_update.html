@@ -1,0 +1,78 @@
+{% extends 'digtrace/base.html' %}
+
+{% block extra_head %}
+ <script src="https://cdn.tiny.cloud/1/xu304e6fa79555r43jzttptpp5082w5ebmt1u2zgn0wm1mht/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="card stacked-form mt-4">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10 pull-left">
+                <h4 class="card-title">Content Update</h4>
+            </div>
+            <div class="col-md-2 pull-right">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'content_page_add' content.slug %}" class="btn btn-info">
+                        Add New Page
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    <div class="card-body ">
+        <form method="post" action="">
+            {% csrf_token %}
+
+            <input type="hidden" name="page_number" value="{{ page.page_number }}">
+            <div class="form-group">
+                <label>Slug</label>
+                <input type="text" name="slug" placeholder="Enter slug here" value="{{ content.slug }}"
+                       class="form-control" disabled>
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" placeholder="Enter content title here" value="{{ content.title }}"
+                       class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Page - {{ page.page_number }}</label>
+                <textarea style="height: 400px" name="text">
+                        {{ page.text }}
+                </textarea>
+            </div>
+
+
+{#            <div class="form-group">#}
+{#                <div class="form-check">#}
+{#                    <label class="form-check-label">#}
+{#                        <input class="form-check-input" type="checkbox" value="">#}
+{#                        <span class="form-check-sign"></span>#}
+{#                        Subscribe to newsletter#}
+{#                    </label>#}
+{#                </div>#}
+{#            </div>#}
+
+            <div class="card-footer">
+                <button type="submit" class="btn btn-fill btn-info">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+            toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+            toolbar_mode: 'floating',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name'
+        });
+    </script>
+{% endblock %}

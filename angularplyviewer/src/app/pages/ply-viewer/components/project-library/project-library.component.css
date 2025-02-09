@@ -1,0 +1,47 @@
+#projectLibrary{
+    border-bottom: 1px solid #000;
+    background-color: antiquewhite;
+    width: 100%;
+    float: left;
+    min-height: 300px;
+}
+
+.delete{
+    position: absolute;
+    right: 5px;
+    font-size: 1.5em;
+    color: #ff0000;
+    display: none;
+}
+.imgContainer{
+    display: inline-block;
+    position: relative;
+    padding: 0 10px;
+}
+.imgContainer:hover{
+    background-color: #677891
+}
+.selectedImage{
+    background-color: #677891;
+}
+.imageItem{
+    cursor: pointer;
+}
+.imgContainer .delete{
+    top: 0;
+    left: 10px;
+}
+.imgContainer:hover .delete{
+    display: block;
+    cursor: pointer;
+    width: 1em;
+    text-align: center;
+}
+.imgContainer .delete:hover{
+    background-color: #ccc;
+}
+
+.middleText{
+    line-height: 300px;
+    text-align: center;
+}

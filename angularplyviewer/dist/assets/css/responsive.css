@@ -1,0 +1,36 @@
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+    .form-area {width:350px;margin-top:70px;margin-bottom:70px}
+    .footer-text {text-align:cen}
+    .footer-menu li {padding:0 10px}
+    .form-area-lg {width:100%;margin-top:80px;margin-bottom:20px}
+    .mt-150 {margin-top:150px}
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    .form-area {width:350px;margin-top:115px;margin-bottom:115px}
+    .footer-text {text-align:left}
+    .footer-menu li {padding:0 10px}
+    .form-area-lg {width:75%;margin-top:80px;margin-bottom:20px}
+    .mt-150 {margin-top:150px}
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .form-area {width:350px;margin-top:115px;margin-bottom:115px;padding:50px}
+    .footer-text {text-align:left}
+    .footer-menu li {padding:0 20px}
+    .form-area-lg {width:50%;margin-top:80px;margin-bottom:20px}
+    .mt-150 {margin-top:150px}
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    .form-area {width:350px;margin-top:115px;margin-bottom:115px;padding:50px}
+    .footer-text {text-align:left}
+    .footer-menu li {padding:0 20px}
+    .form-area-lg {width:50%;margin-top:95px;margin-bottom:20px}
+    .mt-150 {margin-top:150px}
+}

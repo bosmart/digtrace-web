@@ -1,0 +1,218 @@
+{% extends "digtrace/base.html" %}
+{% load static %}
+
+&nbsp; {% if user.is_authenticated %}
+    {% block content %}
+
+        &nbsp
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-primary" href="{% url 'digtrace-job_create' %}"> Create a New Job</a>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+            <a class="btn btn-primary" href="{% url 'digtrace-images-upload' %}"> Create New Image Project</a>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+        </div>
+        &nbsp
+        <div class="d-flex justify-content-center">
+            <h3>Generated Model's</h3>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p>{{ filter_text }} ( showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of
+                total: {{ page_obj.paginator.count }})</p>
+        </div>
+        <div class="d-print-inline-flex">
+            <form id="get_form" method="get" action=.>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="btn-group">
+                            <a class="btn btn-info dropdown-toggle btn-blog " data-toggle="dropdown" href="#"
+                               id="dropdownMenu1" style="width:200px;"><span
+                                    class="selection pull-left">Order By </span>
+                                <span class="pull-right glyphiconglyphicon-chevron-down caret"
+                                      style="float:right;margin-top:10px;"></span></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#" class="" data-value=1>Image Upload Date </a></li>
+                                <li><a href="#" class="" data-value=2>Job Creation Date </a></li>
+                                <li><a href="#" class="" data-value=3>Job Update Date </a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            {% if filter_prev_old_first %}
+
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="time_order" value="RecentFirst" autocomplete="off"> Recent
+                                    First<br>
+                                </label>
+
+                                <label class="btn btn-secondary active">
+
+                                    <input type="radio" name="time_order" value="OldFirst" checked> Oldest First<br>
+                                </label>
+                            {% else %}
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="time_order" value="RecentFirst" autocomplete="off"
+                                           checked> Recent First<br>
+                                </label>
+
+                                <label class="btn btn-secondary">
+
+                                    <input type="radio" name="time_order" value="OldFirst" checked> Oldest First<br>
+                                </label>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="md-form active-cyan active-cyan-2 mb-3">
+                        <input class="form-control" id="search_box" type="text" name="search_box"
+                               placeholder="Search...">
+                    </div>
+                    <div class="col-sm">
+                        <input class="btn btn-primary" type="submit" value="Reload"/>
+                    </div>
+                </div>
+                <input type="text" id="filter" name="filter" hidden/>
+                <script defer="defer" src="{% static 'digtrace/custom/filter.js' %}"></script>
+            </form>
+
+            <script defer="defer" src="{% static 'digtrace/custom/filter.js' %}"></script>
+            <script>
+                document.getElementById("dropdownMenu1").innerHTML = "{{ order_by_prev_field }}"
+            </script>
+            <script>
+                document.getElementById("search_box").placeholder = "{{ search_prev_field }}"
+            </script>
+        </div>
+        &nbsp
+
+        <ol class="list-group-item">
+            {% for job_file in page_obj %}
+                <li class="list-group-item">
+                    <b>Job Name:</b> {{ job_file.job.job_name }} |
+                    <b>Job Created:</b> {{ job_file.job.job_date_created }} |
+                    <b>Job Last Updated:</b> {{ job_file.job.job_date_updated }} |
+
+                    <b>Image Project:</b> {{ job_file.userImagesCollection.title }} |
+                    <b>Image Project Uploaded Date:</b> {{ job_file.userImagesCollection.date_uploaded }} |
+
+
+                    <b>File Type:</b> {{ job_file.file_name }}
+                    {#                    <a href={{ job_file.file.url}} > download| </a>#}
+                    &nbsp
+                    <p>
+                    </p>
+                    <a class="btn btn-outline-primary" href="{% url 'digtrace-job-files-download'  job_file.id %}">
+                        Download </a>
+                    &nbsp;
+                    <a class="btn btn-outline-primary" href="{% url 'digtrace-job-detail' job_file.job.id %}"> View
+                        Job </a> &nbsp;
+                    &nbsp;
+                    <a class="btn btn-outline-danger"
+                       href="{% url 'digtrace-job-files-delete'  job_file.id %}">Delete </a>
+                    <p>
+                    </p>
+                    {% if job_file.userImagesCollection.all|length > 0 %}
+
+
+                        <b>Input images (images associated this file) : </b>
+                    {% endif %}
+
+
+                    <p>
+                    </p>
+                    <ul class="list-inline">
+                        &nbsp;
+                        {% for Image in job_file.userImagesCollection.images_set.all|slice:":3" %}
+                            <li class="list-inline-item">
+                                <a href="{% url 'digtrace-image-render'  Image.id %}">
+                                    <img class="lazyload" style="width:100%"
+                                         src="{% url 'digtrace-image-thumbnail-render'  Image.id %}" data-sizes="auto"
+                                         alt="preview" load="lazy">
+
+
+                                </a>
+
+                            </li>
+                        {% endfor %}
+                        {% if job_file.userImagesCollection.images_set.all|length > 3 %}
+                            <a href="{% url 'digtrace-images-detail' job_file.userImagesCollection.id %}"> More ...</a>
+                        {% endif %}
+
+                    </ul>
+
+                </li>
+
+
+
+
+                {#                    <a href="{% url 'digtrace-ply-redirect'  job_file.id%}"> View Separate| </a>#}
+                {##}
+                {#                    <a href="{% url 'digtrace-ply-detail-iframe'  job_file.id%}"> View| </a>#}
+
+
+
+                {#                    <a href= "{% url 'digtrace-ply-redirect'  job_file.file.url %}" > view | </a>#}
+
+                {#                    <a href= 'http://localhost:4200/' + {{ job_file.file.url }} > view | </a>#}
+
+
+
+                {#                    {% for userImagesCollection in Job %}#}
+                {#                        <li>{{ userImagesCollection.title }}</li>#}
+                {#                    {% endfor %}#}
+                {##}
+
+
+
+
+                {#                     {{ Job.userImagesCollection|default_if_none:"not assigend" }}#}
+                {#                     {{ Job.userImagesCollection.value |default:Job.userImagesCollection}}#}
+
+
+                {##}
+                {#                    <a href="{% url 'digtrace-jobs_detail' Job.id %}">  View Detail </a>#}
+                {#                    <a href="{% url 'digtrace-job_delete' Job.id %}">  Delete </a>#}
+                {#                    <a href="{% url 'digtrace-job_update' Job.id %}"> Modify </a>#}
+                {#                    <a href="{% url 'digtrace-job_submit' Job.id %}"> Submit </a>#}
+
+
+
+                {#                    <a href="{% url 'digtrace-images_detail_delete' Job.id %}">  Delete </a>#}
+                {#                    <a href="{% url 'digtrace-images_add' Job.id %}"> Add Images </a>#}
+
+                <br>  <br>
+
+
+            {% empty %}
+                <li>No files yet</li>
+            {% endfor %}
+        </ol>
+
+
+        <div class="d-flex justify-content-end">
+            <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            &nbsp;
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+
+        {% endif %}
+        &nbsp;
+        <span class="current">
+            <b> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}. </b>
+        </span>
+            &nbsp;
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            &nbsp;
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+            </div>
+        </div>
+
+
+    {% endblock content %}
+{% endif %}

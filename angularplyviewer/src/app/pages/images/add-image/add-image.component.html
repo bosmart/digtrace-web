@@ -1,0 +1,43 @@
+<ng-template [ngIf]="showComponent">
+  <h4 class="mb-5 text-center">Add Images</h4>
+  <form [formGroup]="imageUploadForm" (ngSubmit)="onSubmit()">
+    <div class="form-group d-flex flex-column">    
+      <input [disabled]="progressVal===100" (change)="getImage($event.target)" 
+            type="file" multiple class="py-2" accept="image/png, image/jpeg, image/bmp"
+      >    
+      <small class="align-self-start">*supported image formats are .jpeg, .png and .bmp</small>
+    </div>
+    <button [disabled]="!files || progressVal>0" type="submit" class="btn btn-custom px-4 my-2 hover-shadow">Upload</button>                              
+                
+    <div class="d-flex w-100 align-items-center align-self-start mt-2">
+      <div class="my-3 mr-3 font-weight-bold" *ngIf="0<progressVal && progressVal<100">
+        Uploading...
+      </div>
+      <div class="my-2 mr-2" *ngIf = "progressVal>0">
+        {{progressVal}}% complete
+      </div>
+      <mat-progress-bar class="mat-bar my-2" *ngIf="0<progressVal && progressVal<100" [value]="progressVal" ></mat-progress-bar>
+      <div class="my-3" *ngIf="progressVal===100">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="green" class="bi bi-check2-circle" viewBox="0 0 16 16">
+          <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+          <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
+        </svg>
+      </div>
+    </div>
+
+    <div *ngIf="progressVal===100"  class="alert alert-success toastAlert mt-2 mb-0" role="alert">
+      <div class="d-flex justify-content-between align-items-center">
+        <span>Upload completed successfully</span>
+        <span>              
+          <a (click)="uploadAgain()" class="uploadAgain">
+            Upload More
+          </a>                            
+        </span>
+      </div>
+    </div>       
+  </form> 
+</ng-template>
+
+<div *ngIf="!showComponent" class="text-center mt-4">
+  {{errorMsg}}
+</div>

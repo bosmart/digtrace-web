@@ -1,0 +1,16 @@
+<div id="projectLibrary" [ngClass]=" { 'middleText':  objectKeys(models).length == 0 } ">
+    <span *ngIf="objectKeys(models).length == 0">Generated Models</span>
+    <div class="imgContainer" *ngFor="let key of objectKeys(models)">
+        <span (click)="removeModel( key )" class="delete">X</span>
+        <img 
+            id="{{key}}"
+            class="imageItem"
+            [src]="san.bypassSecurityTrustUrl( models[key][2] )"
+            width="200"
+            height="300"
+            (draggable)="true"
+            (dragstart)="setDragStart( $event, key )"
+            [ngStyle]="{ 'margin' : imgStyle }"
+            />
+    </div>
+</div>

@@ -1,0 +1,21 @@
+{% extends "digtrace/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <form method="post">{% csrf_token %}
+        <h3><p class="text-danger"> Warning: Deleting this Job will DELETE all the associated MODEL FILES (e.g. PLY
+            files)!</p>
+            <p class="text-danger">Warning: If it's a group Job other associated Jobs will be DELETED too!</p></h3>
+
+
+        <h3><p class="text-danger">However, any associated Image Projects will not be deleted. </p></h3>
+
+
+        <button class="btn btn-outline-danger" type="submit"> Confirm delete!</button>
+
+        <a class="btn btn-outline-secondary" href="{% url 'digtrace-jobs' %}"> Cancel and Return </a>
+
+    </form>
+
+{% endblock content %}

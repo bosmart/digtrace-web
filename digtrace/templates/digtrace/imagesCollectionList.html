@@ -1,0 +1,89 @@
+{% extends "digtrace/base.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        &nbsp
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-primary" href="{% url 'digtrace-images-upload' %}">Upload: Create New Image Project</a>
+        </div>
+        &nbsp  &nbsp
+        <div class="d-flex justify-content-center">
+            <h3>Existing Image Projects: </h3>
+
+        </div>
+
+
+
+        <ul class="list-group">
+            {% for UserImagesCollection in object_list %}
+                <div class="rounded">
+                    &nbsp
+                    <li class="list-group-item"> &nbsp
+                        <b>Uploaded: </b> {{ UserImagesCollection.date_uploaded }} | {% if UserImagesCollection.title %}
+                            <b>Title: </b> {{ UserImagesCollection.title }} {% endif %}|
+                        {% if UserImagesCollection.description %}<b>Description: </b>
+                            {{ UserImagesCollection.description }} {% endif %}
+                        <p></p>
+                        <p>
+
+                            <a class="btn btn-outline-primary"
+                               href="{% url 'digtrace-images-detail' UserImagesCollection.id %}"> View Detail </a>
+                            <a class="btn btn-outline-primary"
+                               href="{% url 'digtrace-images-add' UserImagesCollection.id %}"> Add Images </a>
+                            <a class="btn btn-outline-primary"
+                               href="{% url 'digtrace-job_create-from_images' UserImagesCollection.id %}"> Create
+                                Job </a>
+                            <a class="btn btn-outline-primary"
+                               href="{% url 'digtrace-job-files-images' UserImagesCollection.id %}"> Associated Model
+                                Files </a>
+
+
+                            <a class="btn btn-outline-danger"
+                               href="{% url 'digtrace-images-detail-delete' UserImagesCollection.id %}"> Delete </a>
+                            &nbsp;
+                        </p>
+
+                        <ul class="list-inline">
+                            &nbsp;
+                            {% for Image in UserImagesCollection.images_set.all|slice:":6" %}
+                                <li class="list-inline-item">
+                                    &nbsp
+
+                                    {#                            <img class="mr-3" src={{ Image.image_thumbnail.url}} >#}
+                                    {#                                     <a href="{% url 'digtrace-image-render'  Image.id%}">#}
+                                    {##}
+                                    {#                        <img  style="width:100%" src="{% url 'digtrace-image-thumbnail-render'  Image.id%}"  alt="preview">#}
+                                    {##}
+                                    {#                    </a>#}
+
+
+                                    {#                              <a href={{ Image.image.url}}>#}
+                                    <a href="{% url 'digtrace-image-render'  Image.id %}">
+                                        <img class="lazyload" style="width:100%"
+                                             src="{% url 'digtrace-image-thumbnail-render'  Image.id %}"
+                                             data-sizes="auto"
+                                             alt="preview" load="lazy">
+
+
+                                        {#                    <img alt="Lights" style="width:100%" src={{ Image.image_thumbnail.url}} >#}
+
+
+                                    </a>
+
+                                </li>
+                            {% endfor %}
+                            {% if UserImagesCollection.images_set.all|length > 6 %}
+                                <a href="{% url 'digtrace-images-detail' UserImagesCollection.id %}"> More </a>
+                            {% endif %}
+
+                        </ul>
+                    </li>
+
+                    {% empty %}
+                    <li>No images yet</li>
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,1 @@
+/bin/sh -c "sed -i 's/_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiUrl/$DJANGO_URL/g' /usr/share/nginx/html/main.js"

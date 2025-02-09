@@ -1,0 +1,123 @@
+{% extends "digtrace/base.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        &nbsp;
+        <div class="d-flex justify-content-center">
+
+            <a class="btn btn-primary" href="{% url 'digtrace-job_create' %}"> Create a New Job</a>
+            &nbsp; &nbsp;
+            <a class="btn btn-primary" href="{% url 'digtrace-images-upload' %}"> Create New Image Project</a>
+        </div>
+        &nbsp;
+        <div class="d-flex justify-content-center">
+
+            <h3>Existing Jobs:</h3>
+
+
+        </div>
+
+
+
+        &nbsp;
+        <ol class="list-group">
+            {% for Job in object_list %}
+                <div style='background-color: #f2f2f2;'>
+
+                    <div class="rounded">
+
+                        <li class="list-group-item">
+                            <b> Job Created: </b> {{ Job.job_date_created }} |<b> Job Last
+                            Modified: </b> {{ Job.job_date_updated }} | <b> Job name: </b> {{ Job.job_name }}
+
+                            <p>
+
+                                {% if Job.is_group_job_head %}
+                                    <mark>(This is a group job, Click Associated Jobs for Status and Model (PLYs)
+                                        files)
+                                    </mark>
+
+                                {% endif %}
+                                &nbsp;
+                            <p>
+                                {% if Job.is_group_job_head %}
+                                    <a class="btn btn-outline-primary" href="{% url 'digtrace-jobs-group' Job.id %}">
+                                        Associated Jobs </a>
+                                {% endif %}
+                                <a class="btn btn-outline-primary" href="{% url 'digtrace-job-detail' Job.id %}"> View
+                                    Detail </a> &nbsp;
+                                <a class="btn btn-outline-danger" href="{% url 'digtrace-job-delete' Job.id %}">
+                                    Delete </a> &nbsp;
+                                <a class="btn btn-outline-primary" href="{% url 'digtrace-job-update' Job.id %}">
+                                    Modify </a> &nbsp;
+                                <a class="btn btn-outline-primary" href="{% url 'digtrace-job-submit' Job.id %}">
+                                    Submit </a> &nbsp;
+                                {% if Job.job_status %}
+                                    {% if Job.job_status == '224' or Job.job_status == '225' %}
+                                        <a class="btn btn-outline-primary" href="{% url 'digtrace-job-files' Job.id %}">
+                                            Models Files </a>
+                                    {% endif %}
+
+                                {% endif %}
+                                {% if Job.userImagesCollection.all|length > 0 %}
+
+                                    <p><b> Following Image Project(s) are associated with this Job:</b></p>
+                                    <p></p>
+                                {% endif %}
+
+                            <ol>
+                                {% for userImagesCollection in Job.userImagesCollection.all %}
+
+
+                                    <li>
+                                        <b> Image Project Name: </b> | {{ userImagesCollection.title }} |
+                                        <b> Image Project Uploaded Date: </b> {{ userImagesCollection.title }}
+                                    </li>
+                                    <ul class="list-inline">
+                                        &nbsp;
+                                        {% for Image in userImagesCollection.images_set.all|slice:":4" %}
+                                            <li class="list-inline-item">
+                                                &nbsp;
+                                                <a href="{% url 'digtrace-image-render'  Image.id %}">
+                                                    <img style="width:100%"
+                                                         src="{% url 'digtrace-image-thumbnail-render'  Image.id %}"
+                                                         alt="preview">
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                        {% if userImagesCollection.images_set.all|length > 3 %}
+                                            <a href="{% url 'digtrace-images-detail' userImagesCollection.id %}"> More
+                                                ...</a>
+                                        {% endif %}
+                                    </ul>
+                                    <p></p>
+                                    <p>
+                                        <a class="btn btn-outline-primary"
+                                           href="{% url 'digtrace-images-detail' userImagesCollection.id %}"> Image
+                                            Project </a>
+                                    </p>
+                                    </li>
+
+                                {% endfor %}
+                            </ol>
+
+                            <p></p>
+
+                            </p>
+
+
+                            <br> <br>
+
+
+                            {% empty %}
+                        <li>No Jobs yet</li>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </ol>
+
+    {% endif %}
+
+{% endblock content %}

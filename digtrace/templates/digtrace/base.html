@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--  CSS -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'digtrace/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'digtrace/custom/buttons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'digtrace/angular/styles.ff2996fede1de07ce2b8.css' %}">
+
+
+    <!--  Scripts -->
+
+    <script src="{% static 'digtrace/jquery/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'digtrace/popper/popper.min.js' %}"></script>
+    <script src="{% static 'digtrace/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'digtrace/lazy/lazysizes.min.js' %}"></script>
+
+
+    <title>Title</title>
+</head>
+<div class="rounded">
+    <nav class="navbar navbar-expand-lg">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            &nbsp;
+            <a class="navbar-brand" href="#">DigTraceWeb</a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active ">
+                    <a class="nav-link" href={% url 'digtrace-home' %}>Home <span class="sr-only">(current)</span></a>
+                </li>
+
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href={% url 'digtrace-images' %}>Images <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href={% url 'digtrace-jobs' %}>Jobs <span
+                                class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href={% url 'digtrace-job-files-all' %}>Models <span class="sr-only">(current)</span></a>
+                    </li>
+
+
+
+                {% endif %}
+                <li class="nav-item active">
+                    <a class="nav-link" href={% url 'digtrace-ply' %}>PLY Viewer <span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item active">
+                    <a class="nav-link" href={% url 'digtrace-about' %}>About <span class="sr-only">(current)</span></a>
+                </li>
+
+
+            </ul>
+            <ul class="nav  navbar-expand-lg navbar-right">
+                {% if user.is_authenticated %}
+                    <a class="nav-link" href={% url 'profile' %}>Profile <span class="sr-only">(current)</span></a>
+
+                    <a class="nav-link" href={% url 'pre_logout' %}>Logout <span class="sr-only">(current)</span></a>
+                {% else %}
+                    <a class="nav-link" href={% url 'login' %}>Login <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href={% url 'register' %}>Register <span class="sr-only">(current)</span></a>
+                {% endif %}
+
+            </ul>
+
+        </div>
+    </nav>
+</div>
+<body>
+<div class="container-fluid">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="container">
+        <div class="rounded">
+
+
+            {% block content %} {% endblock %}
+
+        </div>
+
+    </div>
+
+
+</div>
+
+<div class="container-fluid">
+    {% block content_plyviewer %} {% endblock %}
+</div>
+
+
+
+{% block sctipt_folder_upload %}
+
+
+{% endblock %}
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+{#<link rel="stylesheet" type=text/css href="{% static 'usermodule/popper/popper.min.js' %}">#}
+
+
+</body>
+</html>

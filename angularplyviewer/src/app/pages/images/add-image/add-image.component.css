@@ -1,0 +1,22 @@
+.mat-bar{   
+    height:20px;  
+    width: 100%;    
+}
+
+.toastAlert{
+    width:450px;
+}
+
+.toastAlert a{
+    text-decoration:underline;
+}
+
+.uploadAgain{
+    cursor: pointer;
+}
+
+@media screen and (min-width:600px) {
+    .mat-bar{
+        width:50%;
+    }    
+}

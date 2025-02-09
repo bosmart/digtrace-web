@@ -1,0 +1,112 @@
+body {font-family: 'Lexia DaMa'}
+h1, h2, h3, h4, h5, h6 {font-family: 'Fira Sans'}
+.bg-custom-s1 {background-color:#677891}
+.bg-custom-dark {background-color:#111111}
+
+/*Customized Buttons*/
+.btn-custom {
+    color: #fff;
+    background-color: #677891;
+    border-color: #677891;
+  }
+  
+  .btn-custom:hover {
+    color: #fff;
+    background-color: #46586d;
+    border-color: #46586d;
+  }
+  
+  .btn-custom:focus, .btn-custom.focus {
+    color: #fff;
+    background-color: #46586d;
+    border-color: #46586d;
+    box-shadow: 0 0 0 0.2rem rgba(58, 176, 195, 0.5);
+  }
+  
+  .btn-custom.disabled, .btn-custom:disabled {
+    color: #fff;
+    background-color: #677891;
+    border-color: #677891;
+  }
+  
+  .btn-custom:not(:disabled):not(.disabled):active, .btn-custom:not(:disabled):not(.disabled).active,
+  .show > .btn-custom.dropdown-toggle {
+    color: #fff;
+    background-color: #46586d;
+    border-color: #46586d;
+  }
+  
+  .btn-custom:not(:disabled):not(.disabled):active:focus, .btn-info:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-info.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(58, 176, 195, 0.5);
+  }
+
+  .btn-outline-custom {
+    color: #677891;
+    border-color: #677891;
+  }
+  
+  .btn-outline-custom:hover {
+    color: #fff;
+    background-color: #83adcf;
+    border-color: #83adcf;
+  }
+  
+  .btn-outline-custom:focus, .btn-outline-custom.focus {
+    box-shadow: 0 0 0 0.2rem rgba(108, 157, 177, 0.5);
+  }
+  
+  .btn-outline-custom.disabled, .btn-outline-custom:disabled {
+    color: #83adcf;
+    background-color: transparent;
+  }
+  
+  .btn-outline-custom:not(:disabled):not(.disabled):active, .btn-outline-custom:not(:disabled):not(.disabled).active,
+  .show > .btn-outline-info.dropdown-toggle {
+    color: #fff;
+    background-color: #83adcf;
+    border-color: #83adcf;
+  }
+  
+  .btn-outline-custom:not(:disabled):not(.disabled):active:focus, .btn-outline-custom:not(:disabled):not(.disabled).active:focus,
+  .show > .btn-outline-info.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(117, 181, 190, 0.5);
+  }
+  /*End of Customized Buttons*/
+
+.border-custom {border-color:#83adcf !important}
+.fs-14 {font-size:14px}
+.img-small {width:52px;height:52px;margin:3px 1px;transition:.2s;}
+.img-small:hover {transform: scale(1.1)}
+.hover-shadow:hover {box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);}
+.sidebar {height:93vh;overflow: hidden;overflow-y: scroll;}
+.mb-35 {margin-bottom:35px}
+
+.search-form {padding:5px;border-radius:30px}
+.search-btn {border:none;background:none;margin-top:5px;float:left}
+.search-text {border:none;outline:none;background:none}
+.filter-btn {border:none;background:none;float:right}
+.filter-list {border-radius:10px;padding:20px}
+.filter-list li {list-style:none}
+.filter-list li a {text-decoration:none;color:#010101;cursor:pointer}
+.filter-list li a:hover {color:#17A2B8 !important}
+.sort-by {border:none;background:none;float:right !important}
+
+/*css for login.html*/
+.body-bg {background-image: url('../images/mm.jpg');background-position:center}
+.body-bg-align{display:flex;flex-direction:column;}
+.form-area {width:330px;background-color:#111111ad;padding:40px;border-radius:10px;margin-top:70px;margin-bottom:70px}
+.form-input {border:none;background:none;outline:none;width:100%;border-bottom:1px solid #83adcf}
+.bg-gray {background-color:#e0f5ff}
+.footer-text {text-align:center}
+.footer-menu li {float:left;padding:0 10px;list-style:none;border-right:1px solid #cccccc}
+.footer-menu li:last-child {border-right:none}
+.footer-menu li a {text-decoration:none;color:#212529}
+.footer-menu li a:hover {color:#677891}
+
+.form-area-lg {width:90%;background-color:#111111ad;padding:30px;border-radius:10px;margin-top:80px;margin-bottom:100px}
+.w-48 {width:48%}
+.mt-150 {margin-top:120px}
+
+/*Gallery css*/
+.delete-btn {top:46%;left:74%}

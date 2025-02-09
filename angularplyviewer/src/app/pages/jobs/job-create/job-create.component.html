@@ -1,0 +1,214 @@
+<div class="container card card-body shadow fs-14">
+  
+  <div *ngIf="jobCreateErrors" class="alert alert-block alert-danger"> 
+    <ul class="m-0" [ngStyle]="{'padding-left':'20px'}"> 
+      <li *ngFor="let warning of jobCreateErrors">
+        {{warning}}
+      </li> 
+    </ul> 
+  </div>
+
+  <h4 class="mb-4 text-center">Create a new job</h4>
+  <form [formGroup]="jobCreateForm" (ngSubmit)="submitJob()">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="jobName">Job name*</label>
+          <input type="text" class="form-control border border-custom fs-14" formControlName="jobName">          
+          <small *ngIf="jobName.invalid && (jobName.touched || allAlerts)"
+                  class="text-danger ml-1"
+          >
+              Job name is required
+          </small>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="jobDesc">Job description</label>
+          <input type="text" class="form-control border border-custom fs-14" formControlName="jobDesc">
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="selectImageCollection">Image project*</label>
+          <select multiple formControlName="selectImageCollection" class="form-control border border-custom fs-14">
+            <option value="" [disabled]="true">Choose a Image Project</option>
+            <option *ngFor="let collection of imageCollections" [ngValue]="collection.id">
+              {{collection.title}}
+            </option>
+          </select>
+          <small class="form-text text-muted">Hold control and left-click to select mutiple. To unselect also hold control and left-click.</small>
+          <small *ngIf="selectImageCollection.invalid && (selectImageCollection.touched || allAlerts)"
+                 class="text-danger ml-1"
+          >
+          You need to select at least one image poject.
+          </small>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="selectGenModel">Gen model*</label>
+          <select formControlName="selectGenModel" class="form-control border border-custom fs-14">
+            <option value="">Choose a Generator Model</option>
+            <option *ngFor="let model of genModels" [ngValue]="model[1]">
+              {{model[0]}}
+            </option>
+          </select>
+          <small *ngIf="selectGenModel.invalid && (selectGenModel.touched || allAlerts)"
+           class="text-danger ml-1"
+          >
+          You need to select a generation model
+          </small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group form-check mb-4">
+          <input type="checkbox" class="form-check-input" formControlName="checkFocalLen">
+          <label class="form-check-label" for="checkFocalLen">Force focal len calc</label>
+          <small class="form-text text-muted">Calculate focal len even if sensor size exists in the database</small>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="focalLen">Focal len</label>
+          <input type="text" class="form-control border border-custom fs-14" formControlName="focalLen" >
+          <small class="form-text text-muted">Only if force focal len calculation is false</small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="selectSurfaceRecon">Surface recon*</label>
+          <select class="form-control border border-custom fs-14" formControlName="selectSurfaceRecon">
+            <option value="">Choose Surface Recon</option>
+            <option *ngFor="let recon of surfaceRecons" [ngValue]="recon[1]">
+              {{recon[0]}}
+            </option>
+          </select>
+          <small *ngIf="selectSurfaceRecon.invalid && (selectSurfaceRecon.touched || allAlerts)"
+           class="text-danger ml-1"
+          >
+          You need to select Surface reconstruction
+          </small>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="surfaceReconDepth">Surface recon depth*</label>
+          <input type="text" class="form-control border border-custom fs-14" formControlName="surfaceReconDepth">
+          <small *ngIf="surfaceReconDepth.invalid && (surfaceReconDepth.touched || allAlerts)"
+           class="text-danger ml-1"
+          >
+          You need to select surface reconstruction depth
+          </small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group form-check mb-4">
+          <input type="checkbox" class="form-check-input" formControlName="checkSurfaceReconColor">
+          <label class="form-check-label" for="surfaceReconColour">Surface recon colour</label>
+          <small class="form-text text-muted">Whether or not to have colour on the surface recon ply</small>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="poissonSampleRate">Poisson recon sample per node </label>
+          <input type="text" class="form-control border border-custom fs-14" formControlName="poissonSampleRate">
+          <small class="form-text text-muted">Only if PoissonRecon is selected</small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group form-check mb-4">
+          <input type="checkbox" class="form-check-input" formControlName="checkPoissonReconDensity">
+          <label class="form-check-label" for="checkPoissonReconDensity">Poisson recon density</label>
+          <small class="form-text text-muted">Only if PoissonRecon is selected. Select to output density if you wish to trim</small>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="ssdReconDegree">Ssd recon degree</label>
+          <input type="text" class="form-control border border-custom fs-14" formControlName="ssdReconDegree">
+          <small class="form-text text-muted">Only if SSDRecon is selected</small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group form-check mb-4">
+          <input type="checkbox" class="form-check-input" formControlName="checkSurfaceTrim">
+          <label class="form-check-label" for="checkSurfaceTrim">Surface trim</label>
+          <small class="form-text text-muted">Trim surface? Only valid for Poisson reconstruction with density output</small>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="surfaceTrimThreshold">Surface trim trim threshold</label>
+          <input type="text" class="form-control border border-custom fs-14" formControlName="surfaceTrimThreshold">
+          <small class="form-text text-muted">Only if Surface trim is selected</small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group form-check mb-4">
+          <input type="checkbox" class="form-check-input" formControlName="checkPolygonMesh">
+          <label class="form-check-label" for="checkPolygonMesh">Surface trim polygon mesh</label>
+          <small class="form-text text-muted">Only if Surface trim is selected</small>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="surfaceTrimSmooth">Surface trim smooth</label>
+            <input type="text" class="form-control border border-custom fs-14" formControlName="surfaceTrimSmooth">
+          <small class="form-text text-muted">Only if Surface trim is selected</small>
+        </div>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="jobNote">Job note</label>
+          <input type="text" class="form-control border border-custom fs-14" formControlName="jobNote">
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="form-group mb-4">
+          <label for="selectJobPriority">Job priority*</label>
+          <select class="form-control border border-custom fs-14" formControlName="selectJobPriority">
+            <option value="">Choose Job Priority</option>
+            <option *ngFor="let jobPriority of jobPriorities" [ngValue]="jobPriority[1]">
+              {{jobPriority[0]}}
+            </option>
+          </select>
+          <small *ngIf="selectJobPriority.invalid && (selectJobPriority.touched || allAlerts)"
+                  class="text-danger ml-1"
+          >
+          You need to select a job priority
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-outline-custom w-25 mx-auto my-4">
+        Create
+      </button>
+    </div>
+  </form>    
+</div>

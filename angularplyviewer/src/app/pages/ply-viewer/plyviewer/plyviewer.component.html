@@ -1,0 +1,66 @@
+<!-- <div class="container-fluid">-->
+<!--  <div class="row">-->
+<!--      <div class="col">-->
+<!--      <app-django-jobs></app-django-jobs>-->
+<!--      </div>-->
+<!--  <div class="col">-->
+<!--    <app-jobs></app-jobs>-->
+<!--    <ul class="panels">-->
+<!--      <li *ngFor="let panel of panels"-->
+<!--          [class.selected]="panel === selectedPanel"-->
+<!--          (click)="onSelect(panel)">-->
+<!--        {{panel.name | titlecase}}-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--    <div [hidden]="!(selectedPanel && selectedPanel.name === 'create')">-->
+<!--      <app-create-main></app-create-main>-->
+<!--    </div>-->
+
+<!--    <div [hidden]="!(selectedPanel && selectedPanel.name === 'measure')">-->
+<!--      <app-measure-main></app-measure-main>-->
+<!--    </div>-->
+<!--    <div [hidden]="!(selectedPanel && selectedPanel.name === 'compare')">-->
+<!--      <app-compare-main></app-compare-main>-->
+<!--    </div>-->
+<!--    <div [hidden]="!(selectedPanel && selectedPanel.name === 'landmarks')">-->
+<!--      <app-landmark></app-landmark>-->
+<!--    </div>-->
+<!--    <div [hidden]=" !(selectedPanel && selectedPanel.name !== 'landmarks' && selectedPanel.name !== 'create') ">-->
+<!--      <app-project-library></app-project-library>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+
+<!--  </div>-->
+
+<!--</div> -->
+
+<div class="page">
+  <div class="page-content">
+    <app-jobs></app-jobs>
+    <ul class="panels">
+      <li *ngFor="let panel of panels"
+          [class.selected]="panel === selectedPanel"
+          (click)="onSelect(panel)">
+        {{panel.name | titlecase}}
+      </li>
+    </ul>
+    <div [hidden]="!(selectedPanel && selectedPanel.name === 'create')">
+      <app-create-main></app-create-main>
+    </div>
+
+    <div [hidden]="!(selectedPanel && selectedPanel.name === 'measure')">
+      <app-measure-main></app-measure-main>
+    </div>
+    <div [hidden]="!(selectedPanel && selectedPanel.name === 'compare')">
+      <app-compare-main></app-compare-main>
+    </div>
+    <div [hidden]="!(selectedPanel && selectedPanel.name === 'landmarks')">
+      <app-landmark></app-landmark>
+    </div>
+    <div [hidden]=" !(selectedPanel && selectedPanel.name !== 'landmarks' && selectedPanel.name !== 'create') ">
+      <app-project-library></app-project-library>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div  class="col flex-column flex-nowrap">
+
+    <!--<div *ngFor="let job of djangojobs">-->
+
+    <!--  <div class=".row-">-->
+    <!--    <label>Job Name:</label>-->
+    <!--    {{ job.job_name }}</div>-->
+    <!--  <div class=".row-">-->
+    <!--    <label>Job status:</label>-->
+    <!--     {{ job.job_status }}-->
+    <!--  </div>-->
+    <!--  <div class=".row-">-->
+    <!--    <label>Date:</label>-->
+    <!--    {{ job.date| date:'medium' }}-->
+    <!--  </div>-->
+    <!--  &lt;!&ndash;    <div class="col-md-12">{{ job.userImagesCollection}}</div>&ndash;&gt;-->
+    <!--</div>-->
+
+    <!--    </div>-->
+    <!--<button (click)="newMessage()"></button>-->
+
+    <!--<table>-->
+    <!--  <tr *ngFor="let item of items | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">-->
+    <!--    &lt;!&ndash; content here &ndash;&gt;-->
+    <!--  </tr>-->
+    <!--</table>-->
+    <div class ='flex-column justify-content-center'>                    <button (click)="getJobs()" class="btn btn-outline-info">Reload Jobs</button>
+</div>
+
+<!--    <input (focus)="onFocus()">-->
+<!--    <div *ngIf="document.hasFocus()">-->
+<!--        <div (focus)="onFocus()"></div>-->
+<!--    </div>-->
+
+    <perfect-scrollbar style="max-width: 600px; max-height: 700px;" [config]="config">
+
+        <div *ngFor="let job of djangojobs| paginate: { itemsPerPage: 8, currentPage: p } ">
+
+            <div id="list-example" class="list-group" >
+
+                <div  class="list-group-item list-group-item-action" (click)="newMessage(job.id, job.job_status, job.job_name); setRow(job.id);"
+                     [ngClass]="{'highlight': selectedIndex ===job.id}">
+                    <!--        {{ job.id }}-->
+                    <p>Job Name:
+                        {{ job.job_name }}
+                    </p>
+                    <!--  <div class="list-group-item list-group-item- action">-->
+                    <p>Job status:
+                        {{ job.job_status }}
+                        <!--  </div>--></p>
+                    <!--  <div class="list-group-item list-group-item-action">-->
+                    <p>Date Created:
+                        {{ job.date| date:'medium' }}</p>
+
+
+                    <div *ngIf="job.userImagesCollection">
+                          <div *ngFor="let images of job.userImagesCollection">        <p><a href="{{apiUrl}}/images/{{images.id}}" target="_blank">Images: {{images.title}}</a></p>
+                          <p>Image uploaded:
+                        {{ images.date_uploaded| date:'medium' }}</p>
+                          </div>
+
+
+
+                    </div>
+                            <div class="row justify-content-end">
+                          &nbsp;             &nbsp;
+
+                          <div class="cols"><a href="{{apiUrl}}/jobs/{{job.id}}/submit" target="_blank"> Submit </a> </div>
+                          &nbsp;                          &nbsp;
+                     <div class="cols"><a href="{{apiUrl}}/jobs/{{job.id}}/delete" target="_blank"> Delete</a></div>
+                           &nbsp; &nbsp;
+                      </div>
+
+                </div>
+            </div>
+
+            <!--    <div class="col-md-12">{{ job.userImagesCollection}}</div>-->
+        </div>
+    </perfect-scrollbar>
+
+
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+
+    <!--<h3>Create a new post:</h3>-->
+    <!-- -->
+    <!--<div class="row mb-1">-->
+    <!--  <label class="col-md-3">Enter your post:</label>-->
+    <!--  <div class="col-md-9 mb-1"><input type="text" name="body" [(ngModel)]="new_post.body"></div>-->
+    <!--  <div class="col-md-2 offset-3">-->
+    <!--    <button (click)="createPost()" class="btn btn-primary">Save</button>-->
+    <!--  </div>-->
+    <!--</div>-->

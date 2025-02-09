@@ -1,0 +1,93 @@
+<ul class="landmarkToolbar">
+    <li title="Upload Images">
+      <label for="importLandmark">
+          <img src="../../../../../assets/icons/import.png" />
+      </label>
+    </li>
+    <li title="Import CSV File">
+        <label for="uploadCSVFile">
+            <img src="../../../../../assets/icons/upload.png">
+        </label>
+    </li>
+    <li title="Add Points"
+        (click)="toggleAddPoints()"
+        [ngClass]="{'hovered': togglePoints}"><img src="../../../../../assets/icons/generate.png"/></li>
+    <li title="Mirror"
+        (click)="doMirror()"
+        [ngClass]="{'hovered': flip}">
+        <img src="../../../../../assets/icons/mirror.png" /></li>
+    <li title="Save CSV File" (click)=" showSavePopUpInfo() "><img src="../../../../../assets/icons/save.png" /></li>
+</ul>
+
+<input
+  type="file"
+  id="importLandmark"
+  (change)="onFileChanged($event)"
+  accept="image/*"
+  multiple />
+
+<input
+    type="file"
+    id="uploadCSVFile"
+    (change)="onFileChanged($event)"
+    accept=".csv" 
+    [ngModel]="uploadCSVFile" />
+
+  <div class="clear"></div>
+
+  <div id="topLandmark">
+      <div id="mainview">
+        <canvas 
+            id="preview" 
+            (mousedown)="dragStart($event)"
+            (mousemove)="dragMove($event)"
+            (mouseup)="dragStop($event)"
+            (wheel)="zoomCanvasEvent($event)"
+            (contextmenu)="rightClickCanvas($event)"
+            (window:resize)="resizeCanvasEvent($event)"
+            #preview></canvas>
+      </div>
+      <div cdkDropList id="rightview" (cdkDropListDropped)="moveLandmark($event)">
+        <br>
+        <div id="landmarksTitle" >LANDMARKS</div>
+        <br>
+        <li *ngFor="let point of points ; index as i;" class="landmarks" cdkDrag>
+            <span class="delete" (click)="removePoint(i)" >X</span><span>L{{i+1}}: {{Math.round(point[0])}}, {{Math.round(point[1])}}</span>
+        </li>
+      </div>
+  </div>
+
+  <div id="imagelist">
+    <div *ngFor="let image of images ; index as i;" [ngClass]="selectedImage == i ? 'imgContainer selectedImage' : 'imgContainer'">
+        <span (click)="removeImage( i )" class="delete">X</span>
+        <img
+            id="{{i}}"
+            src="{{image[0].src}}"
+            height="200"
+            width="{{image[0].naturalWidth * 200 / image[0].naturalHeight}}"
+            class="imageItem"
+            title="{{image[0].title}}"
+            (click)="loadImage( $event )" />
+    </div>
+  </div>
+
+<div class="popupinfobackground" *ngIf=" savePopUpInfo === true " (click)="savePopUpInfo = false">
+  <div id="saveAsPopUp" class="popupinfo" (click)="$event.stopPropagation()">
+      <div class="closeWindow" (click)=" savePopUpInfo = false " >
+          <img src="../../../../../assets/icons/delete.png"></div>
+      <div id="saveAs">Save As</div>
+      <br>
+      <input [(ngModel)]="saveFileName">
+      <input type="text" value="CSV" disabled>
+      <button (click)="doSaveAs()">OK</button>
+  </div>
+</div>
+
+<div *ngIf="delFromCanvas > -1">
+    <div class="delFromCanvas">
+        Delete This Point? (L{{delFromCanvas+1}})
+        <br>
+        <button (click)="deleteFromCanvas()">OK</button>
+        <button (click)="delFromCanvas = -1" >Cancel</button>
+    </div>
+</div>

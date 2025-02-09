@@ -1,0 +1,19 @@
+  <ng-template [ngIf]="showComponent">
+    <h4 class="mb-4 text-center">Update Image Project Informations</h4>
+    <form [formGroup]="changeInfoForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <input type="text" class="form-input p-1 mb-2" formControlName="title" placeholder="Title*">
+        <small *ngIf="title.invalid && (title.touched || allAlerts)" class="ml-1 text-danger">Title is needed</small>
+      </div>    
+      <div class="form-group">
+        <input type="text" class="form-input p-1 mb-2" formControlName="description" placeholder="Images Description*">
+        <small *ngIf="description.invalid && (description.touched || allAlerts)" class="ml-1 text-danger">Description is needed</small>
+      </div>
+      <button type="submit" class="btn btn-custom px-4 mb-2 hover-shadow">Update</button>
+    </form>
+  </ng-template>
+
+  <div *ngIf="!showComponent" class="text-center mt-4">
+    {{errorMsg}}
+  </div>
+

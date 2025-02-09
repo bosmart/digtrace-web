@@ -1,0 +1,33 @@
+<div class="d-flex align-items-start mb-2">
+  <div
+    id="jobsButton"
+    title="Jobs List"
+    (click)="toggle()"
+  >
+    <span *ngIf="!isOpen">+</span>
+    <span *ngIf="isOpen">-</span>
+  </div>
+  <!-- <span *ngIf="notification" class="alert alert-info ml-4 px-2 rounded-0" 
+         [ngStyle]="{'margin-bottom':'10px','font-size':'14px','padding':'2px 4px'}"
+  >
+    {{notification}}
+  </span> -->
+</div>
+
+<div (click)="$event.stopPropagation()" *ngIf="isOpen">  
+  <div id="{{job.id}}" [ngClass]="statusCSS[job.status]" class="jobCondition" *ngFor="let job of jobs">
+    <div class="mr-4">{{job.name}}</div>
+    <div class="mr-4 status">{{statusName[job.status]}}</div> 
+    <div  title="Cancel Job" class="cancel" (click)="cancelJob( job )" *ngIf="job.status==1">
+      Cancel
+    </div>       
+  </div>
+  <div
+    *ngIf="jobs.length > 0"
+    title="Clear list from cancelled or completed job"
+    class="clearButton"
+    (click)="clearJobs()"
+  >
+    Clear
+  </div>
+</div>

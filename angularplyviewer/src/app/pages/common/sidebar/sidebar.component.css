@@ -1,0 +1,16 @@
+.toggleBtn{
+    position:absolute;
+    top:32px;
+    right:0px; 
+    right: 15px;       
+    border:none;
+    background:none;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pageStyle{
+    cursor: pointer;
+}
+

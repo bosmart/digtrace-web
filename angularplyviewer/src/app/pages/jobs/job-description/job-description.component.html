@@ -1,0 +1,208 @@
+<ng-template [ngIf]="showComponent">
+  <div class="container">
+
+    <div *ngIf="jobSubmitErrors" class="alert alert-block alert-danger"> 
+      <ul class="m-0" [ngStyle]="{'padding-left':'20px'}"> 
+        <li *ngFor="let warning of jobSubmitErrors">
+          {{warning}}
+        </li> 
+      </ul> 
+    </div>
+    
+    <div class="card shadow">
+      <div class="card-header">
+        <div class="row d-flex justify-content-center">
+          <button name="jobDeleteBtn" (click)="deleteJob()" name="deleteBtn" type="submit" class="btn btn-outline-danger mx-1 mx-md-3 my-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+              <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+            </svg>
+            Delete
+          </button>
+          <button name="jobModifyBtn" routerLink="/jobs/update-job/{{jobId}}" type="submit" class="btn btn-outline-custom mx-1 mx-md-3 my-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+              <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+            </svg>
+            Modify
+          </button>
+          <button name="jobSubmitBtn" type="submit" (click)="jobSubmit()" 
+                  class="btn btn-outline-custom mx-1 mx-md-3 my-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+              <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+            </svg>
+            Submit
+          </button>
+          <button name="associatedJobsBtn" type="submit" class="btn btn-outline-custom mx-1 mx-md-3 my-2"
+                  *ngIf="jobInfo.is_group_job_head" routerLink="/jobs/associated-jobs/{{jobId}}"
+          >            
+            Associated Jobs
+          </button>
+        </div>
+        <div *ngIf="jobInfo.is_group_job_head" [ngStyle]="{'text-align':'center','margin-top':'5px'}"> 
+          <mark [ngStyle]="{'background':'#fcf8e3','padding-left':'10px'}">(This is a group job, Click Associated Jobs for Status and PLY files)</mark>
+        </div>
+      </div>
+      
+      <div class="card-body">
+        <table class="table table-hover mb-4">
+          <tbody>
+            <tr *ngIf="jobInfo.job_meta">
+              <td scope="row">Remote job processor status</td>
+              <td>:</td>
+              <td>{{jobInfo.host_job_status}}</td>
+            </tr>
+            <tr *ngIf="jobInfo.job_meta">
+              <td scope="row">Remote job queue</td>
+              <td>:</td>
+              <td>{{jobInfo.host_job_queue}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Job name</td>
+              <td>:</td>
+              <td>{{jobInfo.job_name}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Job Submited?</td>
+              <td>:</td>
+              <td>{{jobInfo.job_submit}}</td>
+            </tr>
+            <tr *ngIf="!jobInfo.is_group_job_head">
+              <td scope="row">Job Status code</td>
+              <td>:</td>
+              <td>
+                {{jobInfo.job_status}}<br/>
+                ({{jobInfo.job_status_message}})
+              </td>
+            </tr>            
+            <!-- <tr *ngIf="jobInfo.job_meta">
+              <td scope="row">remote job processing status</td>
+              <td>:</td>
+              <td></td>
+            </tr> -->
+            <tr>
+              <td scope="row">Job description</td>
+              <td>:</td>
+              <td>{{jobInfo.job_description}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Generator Model</td>
+              <td>:</td>
+              <td>{{jobInfo.gen_model}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Force calculate focal length</td>
+              <td>:</td>
+              <td>{{jobInfo.force_focal_len_calc}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Focal length</td>
+              <td>:</td>
+              <td>{{jobInfo.focal_len}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Reconstruct surface using</td>
+              <td>:</td>
+              <td>{{jobInfo.surface_recon}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Poisson recon sample per node</td>
+              <td>:</td>
+              <td>{{jobInfo.poisson_recon_sample_per_node}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Use Poisson recon density?</td>
+              <td>:</td>
+              <td>{{jobInfo.poisson_recon_density}}</td>
+            </tr>
+            <tr>
+              <td scope="row">SSD recon degree</td>
+              <td>:</td>
+              <td>{{jobInfo.ssd_recon_degree}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Surface trim?</td>
+              <td>:</td>
+              <td>{{jobInfo.surface_trim}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Use polygon mesh for surface trimming?</td>
+              <td>:</td>
+              <td>{{jobInfo.surface_trim_polygon_mesh}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Smooth parameter for surface trim</td>
+              <td>:</td>
+              <td>{{jobInfo.surface_trim_smooth}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Job note</td>
+              <td>:</td>
+              <td>{{jobInfo.job_note}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Job priority level</td>
+              <td>:</td>
+              <td>{{jobInfo.job_priority}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Job created</td>
+              <td>:</td>
+              <td>{{jobInfo.job_date_created}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Job updated</td>
+              <td>:</td>
+              <td>{{jobInfo.job_date_updated}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Job finished?</td>
+              <td>:</td>
+              <td>{{jobInfo.job_finished}}</td>
+            </tr>
+          </tbody>
+        </table>      
+
+        <div *ngIf="jobInfo.ply_files.length>0" class="mb-4">
+          <p><strong>Associated Model Files: </strong></p>
+          <p class="container row" *ngFor="let file of jobInfo.ply_files">
+            <span class="mr-1">
+              {{jobInfo.ply_files.indexOf(file)+1+'.'}}
+            </span>            
+            <a href={{apiRoot+file.path}}>
+              {{file.title}}
+            </a>            
+          </p>
+        </div>
+
+        <div *ngFor="let collection of jobInfo.userImagesCollection" class="mb-4">        
+          <p><strong>Image Project Name: </strong>{{collection.title}}</p>
+          <p><strong>Image Project Uploaded Date: </strong>{{collection.date_uploaded}}</p>                  
+          <div class="row">            
+            <div class="col-6 col-md-3 col-lg-2 gallery-img" *ngFor="let imageData of collection.images">
+              <a [href]="apiRoot + imageData.image">
+                <img [src]="apiRoot+imageData.image_thumbnail" class="img-thumbnail mb-4 position-relative">
+              </a>
+              <button class="btn btn-danger btn-sm rounded-0 position-absolute delete-btn" (click)="deleteImage(imageData)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                </svg>
+              </button>
+            </div>          
+          </div>
+          <button class="btn btn-custom" *ngIf="collection.has_more_images"
+                  routerLink="/images/view-images/{{collection.id}}"
+          >
+            View More
+          </button>          
+        </div>                            
+      </div>  
+    </div>
+  </div>
+</ng-template>
+
+<div *ngIf="!showComponent" class="text-center mt-4">
+  {{errorMsg}}
+</div>

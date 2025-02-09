@@ -1,0 +1,22 @@
+.sidebarBefore{
+    display:flex;    
+    transition:all .5s;
+}
+.sidebarAfter{    
+    display:none;
+    transition:all .5s;
+}
+
+.toggleBtn{
+    position:absolute;         
+    padding:5px;
+    border:none;
+    background:none;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}    
+
+.outletStyle{
+    margin:0px 50px;  
+}

@@ -1,0 +1,22 @@
+.idea
+.idea/*
+.idea/workspace.xml
+/digtrace/migrations/
+/angularplyviewer/node_modules/
+/mediafiles/CACHE/
+/mediafiles/images/
+/mediafiles/JobFiles/
+/docker_compose_old/
+/images/CACHE/
+/images/images/
+/images/JobFiles/
+/backup cached/
+/apidigtrace/clibsources
+/apidigtrace/clibsources/*
+/media/*
+/media
+staticfiles
+staticfiles/*
+/staticfiles
+node_modules
+/node_modules/

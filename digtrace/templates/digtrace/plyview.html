@@ -1,0 +1,33 @@
+{% extends "digtrace/base.html" %}
+
+{% load render_bundle from webpack_loader %}
+
+{% load static %}
+
+
+{% block content %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'digtrace/angular/styles.ff2996fede1de07ce2b8.css' %}">
+
+    <base href="{% static '/digtrace/angular/icon.ico' %}">
+
+    {#  <meta name="viewport" content="width=device-width, initial-scale=1">#}
+    <link rel="icon" type="image/x-icon" href="{% static 'angular/icon.ico' %}">
+
+    {#<link rel="stylesheet" href="styles.ff2996fede1de07ce2b8.css">#}
+    {#    <link rel="stylesheet" type="text/css" href="{% static 'digtrace/angular/styles.ff2996fede1de07ce2b8.css' %}">#}
+
+
+
+    {#  <base href="/">#}
+
+    <app-root></app-root>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{% static 'digtrace/angular/runtime.ec2944dd8b20ec099bf3.js' %}"></script>
+    <script src="{% static 'digtrace/angular/polyfills.9b043754ce9801f37b30.js' %}"></script>
+    <script src="{% static 'digtrace/angular/main.df5b97b5a12ab50bae7b.js' %}"></script>
+
+
+{% endblock content %}
+

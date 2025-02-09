@@ -1,0 +1,31 @@
+<div [ngStyle]="{'height':'80vh'}">
+  <div class="container form-area shadow-lg">
+    <h4 class="text-light mb-4 text-center">Sign in to your account</h4>
+    <form>
+      <div class="form-group">
+        <input #username="ngModel" ngModel type="text" name="username"
+               class="text-light form-input mb-2" placeholder="Username/Email">
+      </div>
+      <div class="form-group">
+        <input #password="ngModel" ngModel type="password" name="password"
+               class="text-light form-input mb-2" placeholder="Password">
+      </div>
+      <div class="form-group form-check text-center">
+        <input required form-control #loginCheck="ngModel" ngModel type="checkbox" name="loginCheck" class="form-check-input">
+        <label class="form-check-label text-light mb-2" for="exampleCheck1">Remember me</label>
+      </div>
+      
+      <div *ngIf="errorMsg" class="alert alert-danger fade show text-center">
+        <small>{{errorMsg}}</small>      
+      </div>
+      <button type="submit" class="btn btn-custom btn-sm mb-2 w-100" 
+              (click)="loginOnClick(username,password,loginCheck)"
+      >
+        Sign in
+      </button>
+      <div class="mt-4 text-center">
+        <a routerLink="/auth/forgot-password" class="text-light fs-14">Forgot Password? Click Here</a>
+      </div>
+    </form>
+  </div>
+</div>

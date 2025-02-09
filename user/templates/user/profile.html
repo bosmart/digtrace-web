@@ -1,0 +1,64 @@
+{% extends "digtrace/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container embed-responsive">
+
+        <div class="d-flex justify-content-left">
+
+
+            <div class="col-md-10 pt-2">
+                {% if user.is_authenticated %}
+                    &nbsp;
+                    <h3> Profile</h3>&nbsp;
+                    <p></p>                 <p></p>
+
+
+                    <div class="row  justify-content-md-center">
+
+                        <div class="col-md-6">
+                            <label class="text-info">User Name:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-info"> {{ user.username }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="text-info">First Name:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-info">{{ user.first_name }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="text-info">Last Name:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-info">{{ user.last_name }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="text-info">Institute:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-info">{{ user.institute }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                        <label class="text-info">Email:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="text-info"> {{ user.email }}</p>
+                    </div>
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

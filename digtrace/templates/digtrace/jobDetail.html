@@ -1,0 +1,400 @@
+{% extends "digtrace/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div style='background-color: #f2f2f2;'>
+
+        &nbsp;<p></p>
+        &nbsp; &nbsp; <a class="btn btn-outline-danger" href="{% url 'digtrace-job-delete' Job.id %}"> Delete </a>
+
+        &nbsp; <a class="btn btn-outline-primary" href="{% url 'digtrace-job-update' Job.id %}"> Modify </a>
+
+        &nbsp; <a class="btn btn-outline-primary" href="{% url 'digtrace-job-submit' Job.id %}"> Submit </a>
+        {% if Job.is_group_job_head %}
+
+            <a class="btn btn-outline-primary" href="{% url 'digtrace-jobs-group' Job.id %}"> Associated Jobs </a>
+            &nbsp;
+            <mark>(This is a group job, Click Associated Jobs for Status and PLY files)</mark> <p></p>
+        {% else %}
+            {% if Job.job_status %}
+                {% if Job.job_status == '224' or Job.job_status == '225' %}
+                    <a class="btn btn-outline-primary" href="{% url 'digtrace-job-files' Job.id %}"> Model Files </a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+        &nbsp;
+
+        <div class="col-md-8 pt-3">
+            {% if user.is_authenticated %}
+
+
+
+
+
+
+                {% if Job.jobmeta %}
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label>Remote job processor status:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p> {{ Job.jobmeta.host_job_status }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label>Remote job queue:</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p> {{ Job.jobmeta.host_job_queue }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+
+
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <label>Job name:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.job_name }}</p>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <label>Job Submited?</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.job_submit }}</p>
+                    </div>
+                </div>
+                {% if not Job.is_group_job_head %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Job Status code?</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p> {{ Job.job_status }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% if Job.job_status %}
+                            {% if Job.job_status == '100' %}
+                                <div class="col-md-6">
+                                    <label>(job has been created, but not submitted)</label>
+                                </div>
+                            {% elif Job.job_status == '101' %}
+
+                                <div class="col-md-6">
+                                    <label>(job has been submitted but not sent)</label>
+                                </div>
+
+                            {% elif Job.job_status == '102' %}
+
+                                <div class="col-md-6">
+                                    <label>(job is being sent)</label>
+                                </div>
+
+                            {% elif Job.job_status == '200' %}
+
+                                <div class="col-md-6">
+                                    <label>(job is being sent)</label>
+
+                                </div>
+
+                            {% elif Job.job_status == '201' %}
+
+                                <div class="col-md-6">
+                                    <label>(job sent)</label>
+
+                                </div>
+
+                            {% elif Job.job_status == '202' %}
+
+                                <div class="col-md-6">
+                                    <label>(job in queue)</label>
+
+                                </div>
+
+                            {% elif Job.job_status == '203' %}
+
+                                <div class="col-md-6">
+                                    <label>(job is processing)</label>
+
+                                </div>
+
+                            {% elif Job.job_status == '222' %}
+
+                                <div class="col-md-6">
+                                    <label>(job processing finished, waiting to receive files)</label>
+
+                                </div>
+
+                            {% elif Job.job_status == '223' %}
+
+                                <div class="col-md-6">
+                                    <label>(job processing finished,receiving files)</label>
+
+                                </div>
+
+
+                            {% elif Job.job_status == '224' or  Job.job_status == '225' %}
+
+                                <div class="col-md-6">
+                                    <label>(Finished)</label>
+
+                                </div>
+
+                            {% endif %}
+                        {% endif %}
+
+                    </div>
+
+
+                    {% if Job.jobmeta.host_job_status %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>remote job processing status:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ job.jobmeta.host_job_status }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if job.jobmeta.host_job_queue %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>remote job processing queue:</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ job.jobmeta.host_job_queue }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Job description:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{ Job.job_description }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Generator Model:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{ Job.gen_model }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Force calculate focal length:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{ Job.force_focal_len_calc }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Focal length:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.focal_len }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Reconstruct surface using:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.surface_recon }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Poisson recon sample per node</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.poisson_recon_sample_per_node }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Use Poisson recon density?</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.poisson_recon_density }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>SSD recon degree:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.ssd_recon_degree }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Surface trim?</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.surface_trim }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Use polygon mesh for surface trimming?</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.surface_trim_polygon_mesh }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Smooth parameter for surface trim:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.surface_trim_smooth }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Job note:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.job_note }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Job priority level</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.job_priority }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Job created: </label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.job_date_created }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Job updated:</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.job_date_updated }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Job finished?</label>
+                    </div>
+                    <div class="col-md-6">
+                        <p> {{ Job.job_finished }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    {% if Job.userImagesCollection.all|length > 0 %}
+
+                        <div class="col-md-10">
+
+                            <label>Images</label>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-16">
+                        <p>
+                            <ol>
+                                {% for userImagesCollection in Job.userImagesCollection.all %}
+
+                                    <li>
+                                    <p><b> Image Project Name: </b>{{ userImagesCollection.title }} </p>
+                                    <p><b> Image Project Uploaded Date: </b> {{ userImagesCollection.date_uploaded }}
+                                    </p>
+                                    <ul class="list-inline">
+                                        &nbsp;
+                                        {% for Image in userImagesCollection.images_set.all|slice:":4" %}
+                                            <li class="list-inline-item">
+
+
+                                                {#                              <a href={{ Image.image.url}}>#} &nbsp;
+                                                <a href="{% url 'digtrace-image-render'  Image.id %}">
+                                                    <img class="lazyload" style="width:100%"
+                                                         src="{% url 'digtrace-image-thumbnail-render'  Image.id %}"
+                                                         alt="preview" width="100" height="100">
+
+
+                                                    {#                    <img alt="Lights" style="width:100%" src={{ Image.image_thumbnail.url}} >#}
+
+
+                                                </a>
+
+                                            </li>
+
+
+                                        {% endfor %}
+                                        {% if userImagesCollection.images_set.all|length > 4 %}
+
+                                            <a href="{% url 'digtrace-images-detail' userImagesCollection.id %}">...</a>
+
+                                        {% endif %}
+                                        {% if userImagesCollection.images_set.all|length > 4 %}
+                                            <p></p>
+                                            <p><a class="btn btn-outline-primary"
+                                                  href="{% url 'digtrace-images-detail' userImagesCollection.id %}">
+                                                View More </a></p>
+
+                                        {% endif %}
+                                        <p></p>
+
+
+                                    </ul>
+                                    </li>
+
+
+                                {% endfor %}
+
+                        </ol>
+                        </p>
+                    </div>
+                </div>
+
+
+
+            {% endif %}
+
+
+        </div>
+    </div>
+{% endblock content %}

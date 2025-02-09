@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Lexia DaMa';
+    src: url('LexiaDaMa.eot');
+    src: url('LexiaDaMa.eot?#iefix') format('embedded-opentype'),
+        url('LexiaDaMa.woff2') format('woff2'),
+        url('LexiaDaMa.woff') format('woff'),
+        url('LexiaDaMa.ttf') format('truetype'),
+        url('LexiaDaMa.svg#LexiaDaMa') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+

@@ -1,0 +1,231 @@
+.landmarkToolbar {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    float: left;
+    background-color: #83adcf;
+    overflow: hidden;
+    height: 40px;
+}
+.landmarkToolbar li{
+    cursor: pointer;
+    margin-right: 0.3em;
+    height: 40px;
+    float: left;
+}
+.landmarkToolbar img{
+    cursor: pointer;
+}
+.landmarkToolbar li:hover, .hovered{
+    background-color: #677891;
+}
+
+#topLandmark{
+    display: inline;
+    white-space: nowrap;
+}
+
+.popupinfobackground{
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+.popupinfo{
+    margin: 20% auto;
+    background-color: #677891;
+    color:#fff;
+    height: 390px;
+    width: 800px;
+    max-width: 45%;
+    z-index: 999;
+    position: relative;
+}
+.closeWindow{
+    position: absolute;
+    top:0;
+    right:0;
+    cursor: pointer;
+}
+
+#mainview{
+    display: inline-block;
+    position: relative;
+    width: 70%;
+    height: 70vh;
+    vertical-align: top;
+    background-color: lightgray;
+}
+
+#rightview{
+    display: inline-block;
+    height: 70vh;
+    background-color: #eeeeee;
+    vertical-align: top;
+    width: 30%;
+    text-align: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#uploadCSVFile, #importLandmark{
+    display: none;
+}
+
+.closeWindow{
+    position: absolute;
+    top:0;
+    right:0;
+    cursor: pointer;
+}
+
+#preview {
+    width: 100%;
+    height: 100%;
+    cursor: move;
+}
+#preview.addPoint{
+    cursor: crosshair;
+}
+
+#landmarksTitle{
+    display: block;
+    color: #000;
+    font-weight: bold;
+}
+.landmarks{
+    list-style-type: none;
+    position: relative;
+
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+}
+.delete{
+    position: absolute;
+    right: 5px;
+    font-size: 1.5em;
+    color: #ff0000;
+    display: none;
+}
+#rightview .landmarks:hover .delete{
+    display: inline;
+    cursor: pointer;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+.cdk-drag-animating {
+    text-align: center;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+.landmarks:last-child {
+    border: none;
+}
+#rightview.cdk-drop-list-dragging .landmarks:not(.cdk-drag-placeholder) {
+    text-align: center;
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+#rightview.cdk-drop-list-dragging .delete{
+    display: none;
+}
+
+#imagelist{
+    background-color: #ccc;
+    border-top: 2px solid #000;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+.imgContainer{
+    display: inline-block;
+    position: relative;
+    padding: 0 10px;
+}
+.imgContainer:hover{
+    background-color: #677891
+}
+.selectedImage{
+    background-color: #677891;
+}
+.imageItem{
+    cursor: pointer;
+}
+.imgContainer .delete{
+    top: 0;
+    left: 10px;
+}
+.imgContainer:hover .delete{
+    display: block;
+    cursor: pointer;
+    width: 1em;
+    text-align: center;
+}
+.imgContainer .delete:hover{
+    background-color: #ccc;
+}
+
+.delFromCanvas{
+    color: #ffffff;
+    font-size: 2em;
+    top: 40%;
+    left: 25%;
+    position: fixed;
+    width: 500px;
+    background-color: #677891;
+    padding: 20px 20px 30px;
+    text-align: center;
+}
+.delFromCanvas button{
+    margin-right: 20px;
+}
+
+#saveAsPopUp{
+    height: 190px;
+    width: 450px;
+}
+#saveAsPopUp input{
+    display: inline-block;
+    padding: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+#saveAsPopUp select{
+    display: inline-block;
+    padding: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+#saveAsPopUp button{
+    padding: 5px;
+    cursor: pointer;
+}
+#saveAs{
+    display: inline-block;
+    padding: 10px 0 10px 10px;
+}
+
+.mirror{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}

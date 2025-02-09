@@ -1,0 +1,63 @@
+<button (click)="pressSearchBtn()" #searchBtn="ngModel" ngDefaultControl
+        ngModel *ngIf="searchBtnDisplay" name="searchButton" 
+        class="search-btn text-info" type="button" title="Search" 
+>
+    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-search" viewBox="0 0 20 20">
+        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+    </svg>
+</button>
+
+<form #searchForm="ngForm" ngForm name="searchForm" class="search-form border border-info mr-2 searchForm"
+        *ngIf="searchFormDisplay"
+>
+    <input (input)="search(searchInput)" ngModel #searchInput="ngModel" name="searchInput" 
+            class="search-text searchInput" type="search" placeholder="Search" aria-label="Search"
+    >  
+</form>
+
+
+<a (click)="pressAddBtn()" #addBtn="ngModel" ngModel name="addItem" ngDefaultControl type="button"   title="Add Button"
+    *ngIf="addBtnDisplay" [ngStyle]="{'position': 'relative','margin-top':'3px'}"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#17a2b8" class="bi bi-plus" viewBox="0 0 16 16">
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+    </svg>
+</a>
+
+<button (click)="pressFilterBtn()" *ngIf="listType==='job' && filterBtnDisplay" #filterBtn="ngModel" ngModel 
+        ngDefaultControl name="filterButton" class="filter-btn text-info" type="button" title="Filter" 
+        [ngStyle]="{'margin-right':filterBtnPosition}"
+>
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
+        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+    </svg>
+</button>
+
+<ul #sortList="ngModel" ngModel *ngIf="listType==='job' && sortListDisplay" ngDefaultControl name="sortList" 
+    class="filter-list bg-white shadow" ngModel
+>
+  <li><a (click)="pressFilterOption('image-upload-date')">Image Upload Date</a></li>      
+  <div class="dropdown-divider"></div>
+  <li><a (click)="pressFilterOption('job-creation-date')">Job Creation Date</a></li>
+  <div class="dropdown-divider"></div>
+  <li><a (click)="pressFilterOption('job-update-date')">Job Update Date</a></li>        
+</ul>
+
+<ng-container *ngIf="sortUpDown">
+    <button (click)="pressSortUpBtn()" #sortUpBtn="ngModel" ngModel *ngIf="sortUpBtnDisplay"
+        name="sortUpButton" class="sort-by text-info sort-by-up" type="button" title="recent first" ngDefaultControl
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+        </svg>
+    </button>  
+
+    <button (click)="pressSortDownBtn()" #sortDownBtn="ngModel" ngModel *ngIf="sortDownBtnDisplay"
+        name="sortDownButton" class="sort-by text-info sort-by-down" type="button" title="oldest first" ngDefaultControl
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+        </svg>
+    </button>
+</ng-container>  
+

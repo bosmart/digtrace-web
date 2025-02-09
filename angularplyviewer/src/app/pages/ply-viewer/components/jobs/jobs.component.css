@@ -1,0 +1,54 @@
+#jobsButton{
+    width: 26px;
+    height: 26px;
+    font-size: 32px;    
+    line-height:24px;
+    margin-bottom: 10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000000;
+    cursor: pointer;
+    background-color:#83adcf;            
+}
+.cancel{
+    cursor: pointer;      
+    color:red;
+    font-size:14px;
+    padding: 6px 12px;    
+    border-radius:5px;    
+}
+
+.cancel:hover{
+    text-decoration: underline;
+}
+
+.clearButton{
+    cursor: pointer;        
+    width:65px;
+    height: 30px;
+    margin: 15px 0px;    
+    background-color:coral;    
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.jobCondition{
+    display:flex;
+    align-items:center;
+    margin-bottom:5px;  
+    background-color:white;
+    font-size:14px;
+}
+
+.completed .status{
+    color: #4F8A10;    
+}
+.failed .status{
+    color:#D8000C;    
+}
+.progress .status{
+    color: #31708f;    
+}

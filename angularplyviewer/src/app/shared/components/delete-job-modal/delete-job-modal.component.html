@@ -1,0 +1,9 @@
+<div mat-dialog-content class="content text-danger">
+  <h4>Warning: Deleting this Job will DELETE all the associated MODEL FILES (e.g. PLY files)!</h4>
+  <h4>Warning: If it's a group Job, other associated Jobs will be DELETED too!</h4>
+  <h4>However, any associated Image Projects will not be deleted.</h4>      
+</div>
+<div mat-dialog-actions class="buttons">
+  <button mat-button mat-dialog-close (click)="cancelModal()" class="cancelBtn">Cancel and Return</button>
+  <button mat-button mat-dialog-close (click)="deleteItem()" class="confirmBtn">Confirm Delete</button>
+</div>

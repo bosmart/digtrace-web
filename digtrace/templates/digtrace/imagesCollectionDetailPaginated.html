@@ -1,0 +1,62 @@
+{% extends "digtrace/base.html" %}
+&nbsp; {% if user.is_authenticated %}
+    {% block content %}
+
+
+        {#    <h1>Images Projects</h1>#}
+
+        <b>Uploaded: </b>{{ UserImagesCollection.date_uploaded }} | {% if UserImagesCollection.title %} <b>Title: </b>
+        {{ UserImagesCollection.title }} {% endif %}| {% if UserImagesCollection.description %}<b>Description: </b>
+        {{ UserImagesCollection.description }} {% endif %}
+        <a class="btn btn-outline-primary" href="{% url 'digtrace-images-detail-update' UserImagesCollection.id %}">
+            Change Title/Description </a>
+        <a class="btn btn-outline-primary" href="{% url 'digtrace-images-add' UserImagesCollection.id %}"> Add
+            Images </a>
+        <a class="btn btn-outline-primary" href="{% url 'digtrace-job_create-from_images' UserImagesCollection.id %}">
+            Create Job </a>
+
+
+
+        <hr>
+        <hr>
+        <div class="row">
+            {% for Image in object_list %}
+                <div class="col-md-2">
+                    <a href="{% url 'digtrace-image-render'  Image.id %}">
+                        <img style="width:100%" src="{% url 'digtrace-image-thumbnail-render'  Image.id %}"
+                             alt="preview">
+                    </a>
+                    <hr>
+                    <a class="btn btn-outline-danger" href="{% url 'digtrace-image-delete' Image.pk %}"> Delete
+                        Image </a>
+                    <hr>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            &nbsp;
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+
+        {% endif %}
+        &nbsp;
+        <span class="current">
+            <b> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}. </b>
+        </span>
+            &nbsp;
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            &nbsp;
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+            </div>
+        </div>
+
+
+    {% endblock content %}
+{% endif %}

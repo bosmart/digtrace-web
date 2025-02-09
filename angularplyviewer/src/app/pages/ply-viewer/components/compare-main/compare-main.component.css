@@ -1,0 +1,173 @@
+.compareToolbar {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin: 0;
+    float:left;
+    background-color: #83adcf;
+    overflow: hidden;
+    height: 40px;
+}
+
+.compareToolbar li{
+    margin-right: 0.3em;
+    height: 40px;
+    width: 36px;
+    float: left;
+}
+.compareToolbar img{
+    cursor: pointer;
+}
+.compareToolbar li:hover{
+    background-color: #677891;
+}
+
+.compareToolbar li.colorScale{
+    margin-top: 0.5em;
+    height: auto;
+    width: auto;
+}
+.compareToolbar li.colorScale:hover{
+    background-color: #83adcf;
+}
+.compareToolbar li.colorScale select, .compareToolbar li.colorScale input, .compareToolbar li.colorScale label{
+    cursor: pointer;
+}
+
+#topCompare{
+    display: inline;
+    white-space: nowrap;
+}
+
+#firstModel, #secondModel, #comparison{
+    display: inline-block;
+    vertical-align: top;
+    height: 70vh;
+    width: 30%;
+    text-align: center;
+}
+
+#comparison{
+    width: 40%;
+    background-color: #eeeeee;
+    border-left:1px solid black;
+    border-right:1px solid black;
+}
+
+.middleText{
+    line-height: 70vh;
+    font-style: oblique;
+}
+
+#open{
+    width:450px;
+    height: 200px;
+}
+#open label{
+    padding-right: 5px;
+}
+#open select{
+    margin-right:20px;
+    margin-top:20px;
+    cursor: pointer;
+}
+#open button{
+    margin-top: 20px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+#precision{
+    margin-left:20px;
+}
+
+.popupinfobackground{
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 150vh;
+    z-index: 1002;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+.popupinfo{
+    margin: 20% auto;
+    background-color: #677891;
+    color:#fff;
+    height: 390px;
+    width: 800px;
+    max-width: 45%;
+    z-index: 1003;
+    position: relative;
+}
+.closeWindow{
+    position: absolute;
+    top:0;
+    right:0;
+    cursor: pointer;
+}
+
+#saveAs{
+    display: inline-block;
+    padding: 10px 0 10px 10px;
+}
+#saveAsPopUp{
+    width: 390px;
+    height: 200px;
+}
+#saveAsPopUp input, #saveAsPopUp select{
+    display: inline-block;
+    padding: 5px;
+    margin: 15px 10px;
+    cursor: pointer;
+}
+#saveAsPopUp button{
+    padding: 5px;
+    cursor: pointer;
+}
+#type{
+    width: 35px;
+}
+
+#measurePopup{
+    width: 300px;
+    height: 60px;
+    text-align: center;
+    padding: 40px;
+    font-size: 22px;
+}
+
+#resizerCompareLeftWindows, #resizerCompareRightWindows{
+    min-height: 630px;
+    height: 630px;
+    width: 3px;
+    cursor: col-resize;
+    background-color: #000;
+}
+
+#resizerCompareProject{
+    width: 100%;
+    height: 3px;
+    background-color: #000;
+}
+
+#error{
+    font-size: 2vh;
+    height: 5%;
+}
+
+#contourArea{
+    height: 95%;
+    width: 100%;
+}
+
+.hovered{
+    background-color: #677891;
+}
+
+.compareToolbar li.no, .compareToolbar li.no img, .compareToolbar li select:disabled, .compareToolbar li input:disabled{
+    cursor: default;
+}
+.compareToolbar li.no:hover, .compareToolbar li.no img:hover{
+    background-color: transparent;
+}
+

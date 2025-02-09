@@ -1,0 +1,1 @@
+### keep updating the database from https://github.com/openMVG/openMVG/blob/master/src/openMVG/exif/sensor_width_database/sensor_width_camera_database.txt

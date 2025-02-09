@@ -1,0 +1,127 @@
+{% extends "digtrace/base.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        &nbsp
+        <div class="d-flex justify-content-center">
+            <a class="btn btn-primary" href="{% url 'digtrace-job_create' %}"> Create a New Job</a>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+            <a class="btn btn-primary" href="{% url 'digtrace-images-upload' %}"> Create New Image Project</a>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+            <p>&nbsp;&nbsp;&nbsp;</p>
+
+        </div>
+        &nbsp
+
+        <div class="d-flex justify-content-center">
+            <h3>Generated Model's</h3>
+
+        </div>
+        &nbsp
+
+        <ol class="list-group-item">
+            {% for job_file in object_list %}
+                <li class="list-group-item">
+                    <b>Job Name:</b> {{ job_file.job.job_name }} |
+                    <b>Job Created:</b> {{ job_file.job.job_date_created }} |
+                    <b>Job Last Updated:</b> {{ job_file.job.job_date_updated }} |
+
+                    <b>Image Project:</b> {{ job_file.userImagesCollection.title }} |
+                    <b>Image Project Uploaded Date:</b> {{ job_file.userImagesCollection.date_uploaded }} |
+
+
+                    <b>File Type:</b> {{ job_file.file_name }}
+                    {#                    <a href={{ job_file.file.url}} > download| </a>#}
+                    &nbsp
+                    <p>
+                    </p>
+                    <a class="btn btn-outline-primary" href="{% url 'digtrace-job-files-download'  job_file.id %}">
+                        Download </a>
+                    &nbsp;
+                    <a class="btn btn-outline-primary" href="{% url 'digtrace-job-detail' job_file.job.id %}"> View
+                        Job </a> &nbsp;
+                    &nbsp;
+                    <a class="btn btn-outline-danger"
+                       href="{% url 'digtrace-job-files-delete'  job_file.id %}">Delete </a>
+                    <p>
+                    </p>
+                    {% if job_file.userImagesCollection.all|length > 0 %}
+
+
+                        <b>Input images (images associated this file) : </b>
+                    {% endif %}
+
+
+                    <p>
+                    </p>
+                    <ul class="list-inline">
+                        &nbsp;
+                        {% for Image in job_file.userImagesCollection.images_set.all|slice:":3" %}
+                            <li class="list-inline-item">
+                                <a href="{% url 'digtrace-image-render'  Image.id %}">
+                                    <img class="lazyload" style="width:100%"
+                                         src="{% url 'digtrace-image-thumbnail-render'  Image.id %}" data-sizes="auto"
+                                         alt="preview" load="lazy">
+
+
+                                </a>
+
+                            </li>
+                        {% endfor %}
+                        {% if job_file.userImagesCollection.images_set.all|length > 3 %}
+                            <a href="{% url 'digtrace-images-detail' job_file.userImagesCollection.id %}"> More ...</a>
+                        {% endif %}
+
+                    </ul>
+
+                </li>
+
+
+
+
+                {#                    <a href="{% url 'digtrace-ply-redirect'  job_file.id%}"> View Separate| </a>#}
+                {##}
+                {#                    <a href="{% url 'digtrace-ply-detail-iframe'  job_file.id%}"> View| </a>#}
+
+
+
+                {#                    <a href= "{% url 'digtrace-ply-redirect'  job_file.file.url %}" > view | </a>#}
+
+                {#                    <a href= 'http://localhost:4200/' + {{ job_file.file.url }} > view | </a>#}
+
+
+
+                {#                    {% for userImagesCollection in Job %}#}
+                {#                        <li>{{ userImagesCollection.title }}</li>#}
+                {#                    {% endfor %}#}
+                {##}
+
+
+
+
+                {#                     {{ Job.userImagesCollection|default_if_none:"not assigend" }}#}
+                {#                     {{ Job.userImagesCollection.value |default:Job.userImagesCollection}}#}
+
+
+                {##}
+                {#                    <a href="{% url 'digtrace-jobs_detail' Job.id %}">  View Detail </a>#}
+                {#                    <a href="{% url 'digtrace-job_delete' Job.id %}">  Delete </a>#}
+                {#                    <a href="{% url 'digtrace-job_update' Job.id %}"> Modify </a>#}
+                {#                    <a href="{% url 'digtrace-job_submit' Job.id %}"> Submit </a>#}
+
+
+
+                {#                    <a href="{% url 'digtrace-images_detail_delete' Job.id %}">  Delete </a>#}
+                {#                    <a href="{% url 'digtrace-images_add' Job.id %}"> Add Images </a>#}
+
+                <br>  <br>
+
+
+            {% empty %}
+                <li>No files yet</li>
+            {% endfor %}
+        </ol>
+
+    {% endif %}
+
+{% endblock content %}

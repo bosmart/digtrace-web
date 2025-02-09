@@ -1,0 +1,219 @@
+{% extends "digtrace/base.html" %}
+{% load static %}
+
+&nbsp; {% if user.is_authenticated %}
+
+    {% block content %}
+
+        &nbsp;
+        <div class="d-flex justify-content-center">
+
+            <a class="btn btn-primary" href="{% url 'digtrace-job_create' %}"> Create a New Job</a>
+            &nbsp; &nbsp;
+            <a class="btn btn-primary" href="{% url 'digtrace-images-upload' %}"> Create New Image Project</a>
+        </div>
+        &nbsp;
+        <div class="d-flex justify-content-center">
+
+            <h3>Existing Jobs:</h3>
+
+
+        </div>
+        <div class="d-flex justify-content-center">
+            <p>{{ filter_text }} ( showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of
+                total: {{ page_obj.paginator.count }})</p>
+        </div>
+        <div class="d-print-inline-flex">
+            <form id="get_form" method="get" action=.>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="btn-group">
+                            <a class="btn btn-info dropdown-toggle btn-blog " data-toggle="dropdown" href="#"
+                               id="dropdownMenu1" style="width:200px;"><span
+                                    class="selection pull-left">Order By </span>
+                                <span class="pull-right glyphiconglyphicon-chevron-down caret"
+                                      style="float:right;margin-top:10px;"></span></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#" class="" data-value=1>Image Upload Date </a></li>
+                                <li><a href="#" class="" data-value=2>Job Creation Date </a></li>
+                                <li><a href="#" class="" data-value=3>Job Update Date </a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            {% if filter_prev_old_first %}
+
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="time_order" value="RecentFirst" autocomplete="off"> Recent
+                                    First<br>
+                                </label>
+
+                                <label class="btn btn-secondary active">
+
+                                    <input type="radio" name="time_order" value="OldFirst" checked> Oldest First<br>
+                                </label>
+                            {% else %}
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="time_order" value="RecentFirst" autocomplete="off"
+                                           checked> Recent First<br>
+                                </label>
+
+                                <label class="btn btn-secondary">
+
+                                    <input type="radio" name="time_order" value="OldFirst" checked> Oldest First<br>
+                                </label>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="md-form active-cyan active-cyan-2 mb-3">
+                        <input class="form-control" id="search_box" type="text" name="search_box"
+                               placeholder="Search...">
+                    </div>
+                    <div class="col-sm">
+                        <input class="btn btn-primary" type="submit" value="Reload"/>
+                    </div>
+                </div>
+                <input type="text" id="filter" name="filter" hidden/>
+                <script defer="defer" src="{% static 'digtrace/custom/filter.js' %}"></script>
+            </form>
+
+            <script defer="defer" src="{% static 'digtrace/custom/filter.js' %}"></script>
+            <script>
+                document.getElementById("dropdownMenu1").innerHTML = "{{ order_by_prev_field }}"
+            </script>
+            <script>
+                document.getElementById("search_box").placeholder = "{{ search_prev_field }}"
+            </script>
+        </div>
+
+
+
+        &nbsp;
+        <ol class="list-group">
+            {% for Job in page_obj %}
+                <div style='background-color: #f2f2f2;'>
+
+                    <div class="rounded">
+
+                        <li class="list-group-item">
+                            <b> Job Created: </b> {{ Job.job_date_created }} |<b> Job Last
+                            Modified: </b> {{ Job.job_date_updated }} | <b> Job name: </b> {{ Job.job_name }}
+
+                            <p>
+
+                                {% if Job.is_group_job_head %}
+                                    <mark>(This is a group job, Click Associated Jobs for Status and Model (PLYs)
+                                        files)
+                                    </mark>
+
+                                {% endif %}
+                                &nbsp;
+                            <p>
+                                {% if Job.is_group_job_head %}
+                                    <a class="btn btn-outline-primary" href="{% url 'digtrace-jobs-group' Job.id %}">
+                                        Associated Jobs </a>
+                                {% endif %}
+                                <a class="btn btn-outline-primary" href="{% url 'digtrace-job-detail' Job.id %}"> View
+                                    Detail </a> &nbsp;
+                                <a class="btn btn-outline-danger" href="{% url 'digtrace-job-delete' Job.id %}">
+                                    Delete </a> &nbsp;
+                                <a class="btn btn-outline-primary" href="{% url 'digtrace-job-update' Job.id %}">
+                                    Modify </a> &nbsp;
+                                <a class="btn btn-outline-primary" href="{% url 'digtrace-job-submit' Job.id %}">
+                                    Submit </a> &nbsp;
+                                {% if Job.job_status %}
+                                    {% if Job.job_status == '224' or Job.job_status == '225' %}
+                                        <a class="btn btn-outline-primary" href="{% url 'digtrace-job-files' Job.id %}">
+                                            Models Files </a>
+                                    {% endif %}
+
+                                {% endif %}
+                                {% if Job.userImagesCollection.all|length > 0 %}
+
+                                    <p><b> Following Image Project(s) are associated with this Job:</b></p>
+                                    <p></p>
+                                {% endif %}
+
+                            <ol>
+                                {% for userImagesCollection in Job.userImagesCollection.all %}
+
+
+                                    <li>
+                                        <b> Image Project Name: </b> | {{ userImagesCollection.title }} |
+                                        <b> Image Project Uploaded Date: </b> {{ userImagesCollection.title }}
+                                    </li>
+                                    <ul class="list-inline">
+                                        &nbsp;
+                                        {% for Image in userImagesCollection.images_set.all|slice:":4" %}
+                                            <li class="list-inline-item">
+                                                &nbsp;
+                                                <a href="{% url 'digtrace-image-render'  Image.id %}">
+                                                    <img style="width:100%"
+                                                         src="{% url 'digtrace-image-thumbnail-render'  Image.id %}"
+                                                         alt="preview">
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                        {% if userImagesCollection.images_set.all|length > 3 %}
+                                            <a href="{% url 'digtrace-images-detail' userImagesCollection.id %}"> More
+                                                ...</a>
+                                        {% endif %}
+                                    </ul>
+                                    <p></p>
+                                    <p>
+                                        <a class="btn btn-outline-primary"
+                                           href="{% url 'digtrace-images-detail' userImagesCollection.id %}"> Image
+                                            Project </a>
+                                    </p>
+                                    </li>
+
+                                {% endfor %}
+                            </ol>
+
+                            <p></p>
+
+                            </p>
+
+
+                            <br> <br>
+
+
+                            {% empty %}
+                        <li>No Jobs yet</li>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </ol>
+
+
+
+        <div class="d-flex justify-content-end">
+
+            <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            &nbsp;
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+
+        {% endif %}
+        &nbsp;
+        <span class="current">
+            <b> Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}. </b>
+        </span>
+            &nbsp;
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            &nbsp;
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+            </div>
+        </div>
+
+
+    {% endblock content %}
+{% endif %}

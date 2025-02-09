@@ -1,0 +1,18 @@
+angularplyviewer
+apidigtrace
+env
+docker-compose.yml
+Dockerfile
+docker_compose_old
+images
+media
+nginx
+backup cached
+composeOld
+db.sqlite3
+deoplyenv
+**/node_modules
+**/.git
+**/.idea
+**/.vscode
+digtrace/migrations

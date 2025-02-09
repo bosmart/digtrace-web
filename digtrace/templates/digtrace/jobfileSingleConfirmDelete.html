@@ -1,0 +1,15 @@
+{% extends "digtrace/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <form method="post">{% csrf_token %}
+        <h2> Delete the '{{ JobFile.file_name }}' file from the job '{{ JobFile.job.job_name }}'? </h2>
+
+        <button class="btn btn-outline-danger" type="submit"> Confirm delete!</button>
+
+        <a class="btn btn-outline-secondary" href="{% url 'digtrace-job-files' JobFile.job_id %}"> Cancel </a>
+
+    </form>
+
+{% endblock content %}

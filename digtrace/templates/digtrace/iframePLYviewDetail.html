@@ -1,0 +1,17 @@
+{% extends "digtrace/base.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <!-- 21:9 aspect ratio -->
+        <div class="embed-responsive">
+
+            <iframe class="embed-responsive" src="{{ url_iframe }}"></iframe>
+
+            {#<iframe class="embed-responsive-item" src="{{ SOME_DETAIL_URL|concat_string:object.pk }}" ></iframe>#}
+
+        </div>
+
+    {% endif %}
+
+{% endblock content %}

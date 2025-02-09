@@ -1,0 +1,101 @@
+version: '2.3'
+
+services:
+  web:
+    restart: always
+    env_file:
+      - .env
+    build: .
+    image: digtrace_backend_invento
+    command: bash -c "gunicorn ResearchImpact.wsgi:application --bind 0.0.0.0:8000"
+    hostname: server
+    container_name: researchimpact
+    volumes:
+      - static_volume:/researchImpact/staticfiles
+      - media_volume:/researchImpact/media
+    expose:
+      - 8000
+    extra_hosts:
+      - "dockerhost:172.20.0.1"
+    depends_on:
+      - postgres
+      - nginx
+
+  nginx:
+    restart: always
+    build: ./nginx
+    image: digtrace_nginx_invento
+    volumes:
+      - static_volume:/researchImpact/staticfiles
+      - media_volume:/researchImpact/media
+
+    ports:
+    - '8081:80'
+
+  sshservice:
+    restart: always
+    image: nexus.domain.bluestar-software.co.uk:8444/bu/apidigtrace_ssh_service_ubuntu18.04:latest
+    networks:
+      default:
+        ipv4_address: 172.20.0.5
+    volumes:
+      - sshservice_jobfiles_volume:/apidigtrace/JobFiles
+      - sshservice_db_volume:/apidigtrace/DBMSapi
+      - sshservice_lib_volume:/apidigtrace/lib/Unix
+    expose:
+      - 22
+    ports:
+      - '2223:22'
+
+  angularplyviewer:
+    restart: always
+    build: ./angularplyviewer
+    env_file:
+      - .env
+    command: /bin/sh -c "sed -i 's|apiUrl\:\"\"|apiUrl\:'\'$${DJANGO_URL}\''|g' usr/share/nginx/html/main.247ea75ce284e5597775.js && nginx -g \"daemon off\"\;"
+    image: digtrace_angular_invento
+    container_name: angularplyviewer
+
+    expose:
+      - 80
+    tty: true
+#    entrypoint: entrypoint.sh
+    ports:
+      - '8082:80'
+
+#============================================
+  postgres:
+    restart: always
+    env_file:
+      - .env
+    container_name: digtrace_postgres_invento
+    image: postgres
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    expose:
+      - 5433
+    ports:
+      - '5433:5432'
+    command: -p 5433
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+#==============================================
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/16
+        gateway: 172.20.0.1
+volumes:
+  postgresdata:
+  static_volume:
+  media_volume:
+  sshservice_jobfiles_volume:
+  sshservice_db_volume:
+  sshservice_lib_volume:

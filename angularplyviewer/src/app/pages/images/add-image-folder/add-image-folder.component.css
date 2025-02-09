@@ -1,0 +1,42 @@
+.uploadBtn{
+    margin:0px;
+    position:relative;
+    overflow:hidden;
+}
+
+.uploadInput{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.mat-bar{   
+    height:20px;  
+    width: 100%;    
+}
+
+.toastAlert{
+    width:420px;
+}
+
+.toastAlert a{
+    text-decoration:underline;
+}
+
+.uploadMore{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@media screen and (min-width:600px) {
+    .mat-bar{
+        width:50%;
+    }    
+}
+

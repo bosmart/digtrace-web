@@ -1,0 +1,86 @@
+<app-sidebar-top [plusBtnPath]="plusBtnPath" [listType]="subPath" *ngIf="this.listInfo ?  true : false" 
+                 (onSearchFilter)="onSearchFilter($event)"  class="sidebar-top my-1">
+</app-sidebar-top>
+
+<div class="mt-2" *ngIf="listInfo ?  true : false">
+    <div class="card mb-35 shadow border border-info" *ngFor="let info of listInfo">        
+        <app-card class="card-body" [data]=info></app-card>       
+    </div>    
+</div>
+
+<div *ngIf="totalItems==0 && true" class="text-center my-3">
+  <div class="mb-2">No item Found</div>
+  <a (click)="plusBtnClick()">
+    <button>Add Item</button>
+  </a>  
+</div>
+
+<div *ngIf="listInfo ? false : true" class="m-auto font-weight-bold" [ngStyle]="{'color':'#0d698b'}">
+  {{subPath=='job' ? 'Jobs List' : 'Image Collection List'}}
+</div>
+
+<button type="button" (click)="closeSidebar()" class="toggleBtn" *ngIf="showToggleBtn && toggleBtnVisible">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#169db2" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+    <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
+  </svg>
+</button>
+
+<nav class="mx-auto mt-3 mb-2" aria-label="pagination in sidebar" *ngIf="totalPages>1">
+    <ul class="pagination pagination-sm">    
+      <ng-template [ngIf]="totalPages<=7">
+        <li *ngFor="let page of getArray(totalPages)" 
+          class="page-item pageStyle" [ngClass]="page === itemActive && 'active'" 
+        >
+          <a class="page-link" (click)="getThisPage(page)">{{page}}</a>
+        </li> 
+      </ng-template>             
+      
+      <ng-template [ngIf]="totalPages>7">
+        <li class="page-item pageStyle" [ngClass]="itemActive==1 && 'active'">
+          <a class="page-link" (click)="getThisPage(1)"> 1 </a>
+        </li>  
+  
+        <ng-template [ngIf]="itemActive>3 && totalPages-itemActive>2">
+          <li class="page-item pageStyle">
+            <a (click)="getThisPage(3)" class="page-link">..</a>
+          </li>
+  
+          <li *ngFor="let page of [itemActive-1,itemActive,itemActive+1]" class="page-item pageStyle"
+              [ngClass]="itemActive==page && 'active'"
+          >
+            <a class="page-link" (click)="getThisPage(page)">{{page}}</a>
+          </li>
+  
+          <li class="page-item pageStyle">
+            <a (click)="getThisPage(totalPages-2)" class="page-link">..</a>
+          </li>
+        </ng-template>    
+        
+        <ng-template [ngIf]="itemActive<=3">
+          <li *ngFor="let page of [2,3,4]" class="page-item pageStyle"
+              [ngClass]="itemActive==page && 'active'"
+          >
+            <a class="page-link" (click)="getThisPage(page)">{{page}}</a>
+          </li>
+          <li class="page-item pageStyle">
+            <a (click)="getThisPage(totalPages-2)" class="page-link">..</a>
+          </li>
+        </ng-template>
+  
+        <ng-template [ngIf]="totalPages-itemActive<=2">
+          <li class="page-item pageStyle">
+            <a (click)="getThisPage(3)" class="page-link">..</a>
+          </li>
+          <li *ngFor="let page of [totalPages-3,totalPages-2,totalPages-1]" 
+              class="page-item pageStyle" [ngClass]="itemActive==page && 'active'"
+          >
+            <a class="page-link" (click)="getThisPage(page)">{{page}}</a>
+          </li>
+        </ng-template>
+        
+        <li *ngIf="totalPages!=1" class="page-item pageStyle" [ngClass]="itemActive==totalPages && 'active'">
+          <a class="page-link" (click)="getThisPage(totalPages)"> {{totalPages}} </a>
+        </li>  
+      </ng-template>     
+    </ul>
+</nav>

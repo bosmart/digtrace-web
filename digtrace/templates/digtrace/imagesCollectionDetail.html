@@ -1,0 +1,54 @@
+{% extends "digtrace/base.html" %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+
+        {#    <h1>Images Projects</h1>#}
+
+        <b>Uploaded: </b>{{ UserImagesCollection.date_uploaded }} | {% if UserImagesCollection.title %} <b>Title: </b>
+        {{ UserImagesCollection.title }} {% endif %}| {% if UserImagesCollection.description %}<b>Description: </b>
+        {{ UserImagesCollection.description }} {% endif %}
+        <a class="btn btn-outline-primary" href="{% url 'digtrace-images-detail-update' UserImagesCollection.id %}">
+            Change Title/Description </a>
+        <a class="btn btn-outline-primary" href="{% url 'digtrace-images-add' UserImagesCollection.id %}"> Add
+            Images </a>
+        <a class="btn btn-outline-primary" href="{% url 'digtrace-job_create-from_images' UserImagesCollection.id %}">
+            Create Job </a>
+
+
+
+        <hr>
+        <hr>
+        <div class="row">
+            {% for Image in UserImagesCollection.images_set.all %}
+                {#           <img class="img-responsive"  width="500" height="500" src={{ Image.image.url}} >#}
+
+                <div class="col-md-2">
+
+                    {##}
+                    {#                                    <a href={{ Image.image.url}}>#}
+                    {##}
+                    {#                                        <img  style="width:100%" src={{ Image.image_thumbnail.url}} >#}
+                    {##}
+                    {#                                    </a>#}
+
+                    <a href="{% url 'digtrace-image-render'  Image.id %}">
+                        <img style="width:100%" src="{% url 'digtrace-image-thumbnail-render'  Image.id %}"
+                             alt="preview">
+
+                    </a>
+
+
+                    <hr>
+                    <a class="btn btn-outline-danger" href="{% url 'digtrace-image-delete' Image.pk %}"> Delete
+                        Image </a>
+                    <hr>
+
+                </div>
+
+            {% endfor %}
+        </div>
+
+    {% endif %}
+{% endblock content %}

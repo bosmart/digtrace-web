@@ -1,0 +1,129 @@
+<ul class="compareToolbar">
+    <li title="Import Files" [ngClass]="{'no':enableTools.importFiles == false}">
+        <label (click)="openFileDialog()" >
+            <img src="../../../../../assets/icons/import.png" />
+        </label>
+    </li>
+    <li title="Export Statistics of Models"
+        (click)="showStatistics()"
+        [ngClass]="{'no':enableTools.export == false}">
+        <img src="../../../../../assets/icons/exportstatistics.png" /></li>
+    <li title="Toggle Landmark Placing/Moving Mode"
+        (click)="toggleLandmarks()"
+        [ngClass]=" {'no':enableTools.landmark == false, 'hovered' : flagLandmark }">
+        <img src="../../../../../assets/icons/setlocationmarker.png" /></li>
+    <li title="Clear All Landmarks"
+        (click)="delLandmarks()"
+        [ngClass]=" {'no':enableTools.delete == false }">
+        <img src="../../../../../assets/icons/dellocationmarker.png" /></li>
+    <li title="Quick Measure"
+        (click)="toggleQuickMeasure()"
+        [ngClass]=" {'no':enableTools.measure == false, 'hovered' : flagMeasure }">
+        <img src="../../../../../assets/icons/measure.png" /></li>
+    <li title="Remove Contour Line"
+        (click)="removeContourLine()"
+        [ngClass]=" {'no':enableTools.contourTools == false }">
+        <img src="../../../../../assets/icons/removecontourline.png" /></li>
+    <li title="Add Contour Line"
+        (click)="addContourLine()"
+        [ngClass]=" {'no':enableTools.contourTools == false }">
+        <img src="../../../../../assets/icons/addcontourline.png" /></li>
+    <li title="Transformation" class="colorScale">
+        <select [(ngModel)]="transformation" [disabled]="enableTools.contourTools == false" (change)="updateContourPlot()">
+            <option *ngFor="let c of transformations" [ngValue]="c.id">{{c.name}}</option>
+        </select>
+    </li>
+    <li class="colorScale">
+        <label for="line">Line</label>
+        <input type="checkbox" id="line" [(ngModel)]="line" [disabled]="enableTools.contourTools == false" (change)="updateContourPlot()" />
+    </li>
+    <li class="colorScale">
+        <label for="triangle">Triangle</label>
+        <input type="checkbox" id="triangle" [(ngModel)]="triangle" [disabled]="enableTools.contourTools == false" (change)="updateContourPlot()" />
+    </li>
+    <li class="colorScale">
+        <label for="circle">Circle</label>
+        <input type="checkbox" id="circle" [(ngModel)]="circle" [disabled]="enableTools.contourTools == false" (change)="updateContourPlot()" />
+    </li>
+    <li title="Colour Map" class="colorScale">
+        <select [(ngModel)]="colorScale" (change)="changeColourScale()">
+            <option *ngFor="let c of colorScales" [ngValue]="c.name">{{c.name}}</option>
+        </select>
+    </li>
+</ul>
+
+
+<input
+  #importCompare
+  type="file"
+  (change)="onFileChanged($event)"
+  accept=".csv, .ply"
+  multiple="true"
+  #fileInput
+  style="display:none;" />
+
+<div class="clear"></div>
+
+<div id="topCompare" #topCompare>
+    <div id="firstModel" #firstModel
+        [ngClass]=" { 'middleText':  !firstCurrentXYZ } "
+        (drop)="generatePanel( $event )"
+        (dragover)="$event.preventDefault()">
+        <span *ngIf="!firstCurrentXYZ">Drop Model here</span>
+    </div>
+    <div id="comparison" #comparison
+        mwlResizable
+        [resizeEdges]="{ left: true, right: true }"
+        [enableGhostResize]="true"
+        (resizeEnd)="onResizeEnd( $event )">
+        <div id="error">{{contourError}}</div>
+        <div id="contourArea" #contourArea
+            [ngClass]=" { 'middleText':  firstCurrentXYZ && secondCurrentXYZ && !secondA.length } ">
+            <span *ngIf="firstCurrentXYZ && secondCurrentXYZ && !secondA.length" >Add Equal Amount of Landmarks on Both Models</span>
+        </div>
+    </div>
+    <div id="secondModel" #secondModel
+        [ngClass]=" { 'middleText': !secondCurrentXYZ } "
+        (drop)="generatePanel( $event )"
+        (dragover)="$event.preventDefault()">
+        <span *ngIf="!secondCurrentXYZ">Drop Model here</span>
+    </div>
+</div>
+<div id="resizerCompareProject"></div>
+
+<div class="popupinfobackground" *ngIf=" openPopupInfo === true " (click)=" openPopupInfo = false ">
+    <div id="open" class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)=" openPopupInfo = false ">
+            <img src="../../../../../assets/icons/delete.png">
+        </div>
+        <label id="precision">Precision:</label>
+        <select [(ngModel)]="precision">
+            <option *ngFor="let c of precisions" [ngValue]="c.name">{{c.name}}</option>
+        </select>
+        <label for="scale">Scale:</label>
+        <select [(ngModel)]="scale">
+            <option *ngFor="let c of scales" [ngValue]="c.id">{{c.name}}</option>
+        </select><br>
+        <button (click)="doOpen()">Apply</button>
+    </div>
+</div>
+
+<div class="popupinfobackground" *ngIf=" savePopUpInfo === true " (click)=" savePopUpInfo = false ">
+    <div id="saveAsPopUp" class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)=" savePopUpInfo = false " ><img src="../../../../../assets/icons/delete.png"></div>
+        <div id="saveAs">Save As</div>
+        <br>
+        <input [(ngModel)]="saveFileName">
+        <input id="type" type="text" value="CSV" disabled>
+        <button (click)="exportStatistics()">OK</button>
+    </div>
+</div>
+
+<div class="popupinfobackground" *ngIf=" measurePopUpInfo === true " (click)="measurePopUpInfo = false">
+    <div id="measurePopup" class="popupinfo" (click)="$event.stopPropagation()">
+        <div class="closeWindow" (click)="measurePopUpInfo = false">
+            <img src="../../../../../assets/icons/delete.png">
+        </div>
+        <span>{{this.quickDistance}}</span>
+    </div>
+</div>

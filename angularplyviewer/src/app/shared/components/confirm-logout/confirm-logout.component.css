@@ -1,0 +1,41 @@
+.title{
+    font-size: 25px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight:bold;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    margin-top:15px;        
+}
+
+.buttons{
+    display:flex;
+    justify-content: center;   
+    margin-bottom:10px;                     
+}
+
+.buttons button{    
+    width: 160px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 3px;
+    border: 1px solid #00000008;
+    margin: 0px 15px;
+}
+
+.cancelBtn{
+    background:white;        
+}
+.cancelBtn:hover{
+    background:#ddd;
+}
+
+.confirmBtn{
+    background: #ff0000;
+    color:white;    
+    border: 1px solid #00000008;
+}
+
+.confirmBtn:hover{
+    background: #ff0000dd;
+}

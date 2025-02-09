@@ -1,0 +1,41 @@
+
+<section class="mt-5">
+  <div class="container-fluid">
+    <div class="row">                 
+      <app-sidebar class="card card-body bg-light shadow sidebar col-lg-3" [showToggleBtn]="false">
+      </app-sidebar>  
+      <div class="container col-lg-9 profile" *ngIf="profileInfo">
+        <h1>User Profile</h1>
+        <table class="table table-hover mt-3">
+          <tbody>
+            <tr>
+              <td scope="row">User Name</td>
+              <td>:</td>
+              <td>{{profileInfo.username}}</td>
+            </tr>
+            <tr>
+              <td scope="row">First Name</td>
+              <td>:</td>
+              <td>{{profileInfo.first_name}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Last Name</td>
+              <td>:</td>
+              <td>{{profileInfo.last_name}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Institute</td>
+              <td>:</td>
+              <td>{{profileInfo.institute}}</td>
+            </tr>
+            <tr>
+              <td scope="row">Email</td>
+              <td>:</td>
+              <td>{{profileInfo.email}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

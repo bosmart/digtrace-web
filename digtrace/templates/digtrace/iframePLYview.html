@@ -1,0 +1,12 @@
+{% extends "digtrace/base.html" %}
+
+{% block content_plyviewer %}
+
+    <!-- 21:9 aspect ratio -->
+    <div class="embed-responsive embed-responsive-16by9">
+
+        <iframe class="embed-responsive-item" src="{{ PLY_VIEWER_URL }}"></iframe>
+        {#<iframe  class="embed-responsive-item" src="https://app2.astra.bluestar-software.co.uk/" ></iframe>#}
+    </div>
+
+{% endblock content_plyviewer %}
